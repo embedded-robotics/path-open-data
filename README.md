@@ -3,7 +3,7 @@ This repository will deal with the code for assessment of the Open-Ended Patholo
 
 For Qwen-2.5VL, install transformers from scratch
 
-1. pip install git+https://github.com/huggingface/transformers accelerate -> This technique of installing transformers does not work well for DeepSeekVL2, need to install transformers==4.38.2 for this)
+1. pip install git+https://github.com/huggingface/transformers accelerate -> This technique of installing transformers does not work well for DeepSeekVL2, need to install transformers==4.38.2 for this
 2. pip install qwen-vl-utils
 3. Do NOT Install -> pip install flash-attn (this doesn't work because GLIB_C is not up to date on the server. Might need to setup a local fix if we need to make this work)
 
@@ -20,3 +20,11 @@ For MiniCPMV2.6, we need to do the following
 1. pip install git+https://github.com/huggingface/transformers accelerate
 2. Install Flash Attention (For Cuda12.8 and Torch2.7.0): (https://github.com/Dao-AILab/flash-attention/issues/1644#issuecomment-2899396361)
 pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiTRUE-cp310-cp310-linux_x86_64.whl
+
+For Intern-VL3.0, we need to do the following
+1. We can see the code to run the models on multile GPU using the link: https://huggingface.co/OpenGVLab/InternVL3-8B
+2. pip install git+https://github.com/huggingface/transformers accelerate
+3. Install Flash Attention (For Cuda12.8 and Torch2.7.0): (https://github.com/Dao-AILab/flash-attention/issues/1644#issuecomment-2899396361)
+pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiTRUE-cp310-cp310-linux_x86_64.whl
+
+
