@@ -27,4 +27,5 @@ For Intern-VL3.0, we need to do the following
 3. Install Flash Attention (For Cuda12.8 and Torch2.7.0): (https://github.com/Dao-AILab/flash-attention/issues/1644#issuecomment-2899396361)
 pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiTRUE-cp310-cp310-linux_x86_64.whl
 
-
+For Gemma3-4b-it/MedGemma-4b-it, we need to do the following
+1. pip install git+https://github.com/huggingface/transformers accelerate
