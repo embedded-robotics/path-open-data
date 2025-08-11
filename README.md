@@ -29,3 +29,9 @@ pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.
 
 For Gemma3-4b-it/MedGemma-4b-it, we need to do the following
 1. pip install git+https://github.com/huggingface/transformers accelerate
+
+For LLaVA-1.6-7B
+1. pip install sentencepiece
+2. pip install protobuf
+3. pip install transformers==4.31.0
+4. pip install shortuuid
