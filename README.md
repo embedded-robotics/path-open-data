@@ -31,7 +31,15 @@ For Gemma3-4b-it/MedGemma-4b-it, we need to do the following
 1. pip install git+https://github.com/huggingface/transformers accelerate
 
 For LLaVA-1.6-7B
-1. pip install sentencepiece
-2. pip install protobuf
-3. pip install transformers==4.31.0
-4. pip install shortuuid
+1. git clone git@github.com:haotian-liu/LLaVA.git
+2. pip install sentencepiece
+3. pip install protobuf
+4. pip install transformers==4.31.0
+5. pip install shortuuid
+
+For LLaVA-MED-Mistral-7B
+1. git clone git@github.com:microsoft/LLaVA-Med.git
+2. pip install sentencepiece
+3. pip install protobuf
+4. pip install transformers==4.36.2
+5. pip install shortuuid
