@@ -43,3 +43,10 @@ For LLaVA-MED-Mistral-7B
 3. pip install protobuf
 4. pip install transformers==4.36.2
 5. pip install shortuuid
+
+For Quilt-LLaVA-Vicuna-7B
+1. git clone git@github.com:aldraus/quilt-llava.git
+2. pip install sentencepiece
+3. pip install protobuf
+4. pip install transformers==4.31.0
+5. pip install shortuuid
