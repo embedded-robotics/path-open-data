@@ -50,3 +50,11 @@ For Quilt-LLaVA-Vicuna-7B
 3. pip install protobuf
 4. pip install transformers==4.31.0
 5. pip install shortuuid
+
+For LLaVA-Tri (MedTrinity-25M)
+1. git clone git@github.com:UCSC-VLAA/MedTrinity-25M.git
+2. pip install sentencepiece
+3. pip install protobuf
+4. pip install transformers==4.37.2
+5. pip install shortuuid
+6. pip install git+https://github.com/bfshi/scaling_on_scales.git 

@@ -1,0 +1,8 @@
+[
+{"id": 0, "image": "ck_PTGC_2x.jpeg", "conversations": [{"value":"Can you provide a consice description of the histopathology image shown?"}]},
+{"id": 1, "image": "ck_PTGC_5x.jpeg", "conversations": [{"value":"Can you provide a consice description of the histopathology image shown?"}]},
+{"id": 2, "image": "ck_serositis_4x.jpg", "conversations": [{"value":"Can you provide a consice description of the histopathology image shown?"}]},
+{"id": 3, "image": "ck_SSA_colon_10x.jpg", "conversations": [{"value":"Can you provide a consice description of the histopathology image shown?"}]},
+{"id": 4, "image": "ck_steatohepatitis_100x.jpg", "conversations": [{"value":"Can you provide a consice description of the histopathology image shown?"}]},
+{"id": 5, "image": "ck_steatohepatitis_200x.jpg", "conversations": [{"value":"Can you provide a consice description of the histopathology image shown?"}]}
+]
