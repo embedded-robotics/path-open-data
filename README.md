@@ -57,4 +57,10 @@ For LLaVA-Tri (MedTrinity-25M)
 3. pip install protobuf
 4. pip install transformers==4.37.2
 5. pip install shortuuid
-6. pip install git+https://github.com/bfshi/scaling_on_scales.git 
+6. pip install git+https://github.com/bfshi/scaling_on_scales.git
+
+For Data Augmentation
+
+1. git clone git@github.com:DIAGNijmegen/pathology-he-autoaugmetation.git or git clone git@github.com:DIAGNijmegen/pathology-he-auto-augment.git
+2. pip install scikit-image
+3. pip install albumentations==1.1.0
