@@ -1,6 +1,9 @@
 # path-open-data
 This repository will deal with the code for assessment of the Open-Ended Pathology VQA
 
+Install Flash Attention (For Cuda12.8 and Torch2.7.0): (https://github.com/Dao-AILab/flash-attention/issues/1644#issuecomment-2899396361)
+pip install https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiTRUE-cp310-cp310-linux_x86_64.whl
+
 For Qwen-2.5VL, install transformers from scratch
 
 1. pip install git+https://github.com/huggingface/transformers accelerate -> This technique of installing transformers does not work well for DeepSeekVL2, need to install transformers==4.38.2 for this
