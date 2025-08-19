@@ -10,15 +10,6 @@ For Qwen-2.5VL, install transformers from scratch
 2. pip install qwen-vl-utils
 3. Do NOT Install -> pip install flash-attn (this doesn't work because GLIB_C is not up to date on the server. Might need to setup a local fix if we need to make this work)
 
-For DeepSeekVL2, we need to do the following:
-
-1. Clone the Repo: https://github.com/deepseek-ai/DeepSeek-VL2
-2. pip install transformers==4.38.2 (this requirement is given in the requirements.txt. Updating transformers doesn't work correctly)
-2. pip install attrdict
-3. pip install timm
-4. pip install xformers
-4. Remove all the LLamA_FlashAttention_2 based lines from deepseek_vl2/models/modeling_deepseek.py (https://github.com/deepseek-ai/DeepSeek-VL2/issues/87)
-
 For MiniCPMV2.6, we need to do the following
 1. pip install git+https://github.com/huggingface/transformers accelerate
 2. Install Flash Attention (For Cuda12.8 and Torch2.7.0): (https://github.com/Dao-AILab/flash-attention/issues/1644#issuecomment-2899396361)
@@ -61,6 +52,15 @@ For LLaVA-Tri (MedTrinity-25M)
 4. pip install transformers==4.37.2
 5. pip install shortuuid
 6. pip install git+https://github.com/bfshi/scaling_on_scales.git
+
+For DeepSeekVL2, we need to do the following:
+
+1. Clone the Repo: https://github.com/deepseek-ai/DeepSeek-VL2
+2. pip install transformers==4.38.2 (this requirement is given in the requirements.txt. Updating transformers doesn't work correctly)
+2. pip install attrdict
+3. pip install timm
+4. pip install xformers
+4. Remove all the LLamA_FlashAttention_2 based lines from deepseek_vl2/models/modeling_deepseek.py (https://github.com/deepseek-ai/DeepSeek-VL2/issues/87)
 
 For Data Augmentation
 
