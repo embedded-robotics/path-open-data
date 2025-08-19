@@ -4,7 +4,8 @@ LLaVA/*
 LLaVA-Med/*
 quilt-llava/*
 MedTrinity-25M/*
-pathology_images/*
+pathology_test_data/*
 pathology_images_augmented/*
 pathology-he-autoaugmetation/*
 pathology-he-auto-augment/*
+*.csv
