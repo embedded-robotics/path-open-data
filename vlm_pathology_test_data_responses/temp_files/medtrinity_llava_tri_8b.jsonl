@@ -1,0 +1,83 @@
+[
+    {
+        "id": 0,
+        "image": "ck_PTGC_2x.jpeg",
+        "conversations": [
+            {
+                "value": "How can you best describe the low-power pattern observed in this image of a lymph node?"
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "image": "ck_PTGC_2x.jpeg",
+        "conversations": [
+            {
+                "value": "What are three main differential diagnostic considerations if this lymph node was sampled from a young teenager with solitary adenopathy?"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "image": "ck_PTGC_5x.jpeg",
+        "conversations": [
+            {
+                "value": "What is the morphologic alteration being depicted in this enlarged solitary lymph node from a young child?"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "image": "ck_PTGC_5x.jpeg",
+        "conversations": [
+            {
+                "value": "What is the expected immunoarchitecture of the  mantle cells in the alteration being depicted in the image?"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "image": "ck_serositis_4x.jpg",
+        "conversations": [
+            {
+                "value": "What is the most common source for the change depicted in this tissue from the bowel of a 8 day old neonate with distension?"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "image": "ck_serositis_4x.jpg",
+        "conversations": [
+            {
+                "value": "What is the specific anatomic region shown in the image on the right half of the image?"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "image": "ck_steatohepatitis_100x.jpg",
+        "conversations": [
+            {
+                "value": "If these histologic changes included conspicuous portal plasma cells, what would be the primary consideration for the diagnosis?"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "image": "ck_steatohepatitis_100x.jpg",
+        "conversations": [
+            {
+                "value": "What would the primary histologic feature to suggest a diagnosis of Wilson's disease from the image?"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "image": "ck_steatohepatitis_200x.jpg",
+        "conversations": [
+            {
+                "value": "In an overweight adolescent with mildly increased transaminases, what diagnosis do the portal changes here suggest?"
+            }
+        ]
+    }
+]
