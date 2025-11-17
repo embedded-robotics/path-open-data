@@ -8,4 +8,9 @@ pathology_test_data/*
 pathology_images_augmented/*
 pathology-he-autoaugmetation/*
 pathology-he-auto-augment/*
+PathOPEN_Eval_Images/*
+PathOPEN_Eval_Images_Augmented/*
+PathVQA_Eval_Images/*
 *.csv
+*.env
+box_config.json
