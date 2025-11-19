@@ -12,6 +12,7 @@ PathOPEN_Eval_Images/*
 PathOPEN_Eval_Images_Augmented/*
 PathVQA_Eval_Images/*
 histocartography/*
+pathvqa-histopathology/*
 *.csv
 *.env
 box_config.json
