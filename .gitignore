@@ -16,3 +16,4 @@ pathvqa-histopathology/*
 *.csv
 *.env
 box_config.json
+*.DS_Store
