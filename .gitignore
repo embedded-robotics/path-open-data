@@ -18,3 +18,4 @@ pathvqa-histopathology/*
 *.env
 box_config.json
 *.DS_Store
+*.out
