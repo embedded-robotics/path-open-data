@@ -1,0 +1,130 @@
+[
+  {
+    "Case ID": 1,
+    "Organ": "Skin",
+    "Categorization": "Infection",
+    "Regional Anatomy": "Lymph Node",
+    "Open Ended": [
+      {
+        "Question": "Question Text",
+        "Correct Answer": "Correct Answer Text",
+        "Wrong Answer": "Wrong Answer Text"
+      },
+      {
+        "Question": "Question Text",
+        "Correct Answer": "Correct Answer Text",
+        "Wrong Answer": "Wrong Answer Text"
+      }
+    ],
+    "MCQ": {
+      "Question": "Question Text",
+      "Option 1": "Option 1 Text",
+      "Option 2": "Option 2 Text",
+      "Option 3": "Option 3 Text",
+      "Option 4": "Option 4 Text",
+      "Option 5": "Option 5 Text",
+      "Answer": "Option 1"
+    },
+    "Close Ended": {
+      "Question": "Question Text",
+      "Answer": "Yes"
+    },
+    "Images": [
+      {
+        "Directory": "img_pathopen_1_01",
+        "Magnification": "40x",
+        "Original": "img_pathopen_1_01_orig",
+        "Augmented": [
+          "img_pathopen_1_01_aug_0.png",
+          "img_pathopen_1_01_aug_1.png",
+          "img_pathopen_1_01_aug_2.png",
+          "img_pathopen_1_01_aug_3.png"
+        ]
+      },
+      {
+        "Directory": "img_pathopen_1_02",
+        "Magnification": "10x",
+        "Original": "img_pathopen_1_02_orig",
+        "Augmented": [
+          "img_pathopen_1_02_aug_0.png",
+          "img_pathopen_1_02_aug_1.png"
+        ]
+      },
+      {
+        "Directory": "img_pathopen_1_03",
+        "Magnification": "100x",
+        "Original": "img_pathopen_1_03_orig",
+        "Augmented": [
+          "img_pathopen_1_03_aug_0.png",
+          "img_pathopen_1_03_aug_1.png",
+          "img_pathopen_1_03_aug_2.png",
+          "img_pathopen_1_03_aug_3.png"
+        ]
+      }
+    ]
+  },
+  {
+    "Case ID": 1,
+    "Organ": "Skin",
+    "Categorization": "Infection",
+    "Regional Anatomy": "Lymph Node",
+    "Open Ended": [
+      {
+        "Question": "Question Text",
+        "Correct Answer": "Correct Answer Text",
+        "Wrong Answer": "Wrong Answer Text"
+      },
+      {
+        "Question": "Question Text",
+        "Correct Answer": "Correct Answer Text",
+        "Wrong Answer": "Wrong Answer Text"
+      }
+    ],
+    "MCQ": {
+      "Question": "Question Text",
+      "Option 1": "Option 1 Text",
+      "Option 2": "Option 2 Text",
+      "Option 3": "Option 3 Text",
+      "Option 4": "Option 4 Text",
+      "Option 5": "Option 5 Text",
+      "Answer": "Option 1"
+    },
+    "Close Ended": {
+      "Question": "Question Text",
+      "Answer": "Yes"
+    },
+    "Images": [
+      {
+        "Directory": "img_pathopen_1_01",
+        "Magnification": "40x",
+        "Original": "img_pathopen_1_01_orig",
+        "Augmented": [
+          "img_pathopen_1_01_aug_0.png",
+          "img_pathopen_1_01_aug_1.png",
+          "img_pathopen_1_01_aug_2.png",
+          "img_pathopen_1_01_aug_3.png"
+        ]
+      },
+      {
+        "Directory": "img_pathopen_1_02",
+        "Magnification": "10x",
+        "Original": "img_pathopen_1_02_orig",
+        "Augmented": [
+          "img_pathopen_1_02_aug_0.png",
+          "img_pathopen_1_02_aug_1.png"
+        ]
+      },
+      {
+        "Directory": "img_pathopen_1_03",
+        "Magnification": "100x",
+        "Original": "img_pathopen_1_03_orig",
+        "Augmented": [
+          "img_pathopen_1_03_aug_0.png",
+          "img_pathopen_1_03_aug_1.png",
+          "img_pathopen_1_03_aug_2.png",
+          "img_pathopen_1_03_aug_3.png"
+        ]
+      }
+    ]
+  }
+]

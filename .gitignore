@@ -15,6 +15,7 @@ PathVQA_Eval_Images/*
 histocartography/*
 pathvqa-histopathology/*
 data_eval_analysis_scripts/input/*
+data_prep_scripts/output/*
 *.csv
 *.env
 box_config.json
