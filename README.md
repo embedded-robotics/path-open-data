@@ -1,5 +1,24 @@
-# path-open-data
-This repository will deal with the code for assessment of the Open-Ended Pathology VQA
+# PathOPEN Dataset
+This repository will deal with the following things
+
+- data_analysis_scripts
+    - Analysis of RAW PathOPEN Dataset collected by clinical pathologists
+    - Augmentation of RAW PathOPEN Dataset using `DIAGNijmegen/pathology-he-auto-augment.git`
+    - Analysis and Filtering of PathVQA dataset for fair comparison with PathOPEN dataset
+
+- data_eval_prep_scripts
+    - PathOPEN Data Prepration for evaluation
+    - PathOPEN Image Augmentation data prepartion for evaluation
+    - Filtering of PathVQA H\&E Images using HistoCartography
+    - PathVQA Data Preparation for evaluation
+
+- data_eval_analysis_scripts
+    - Analysis of the evaluated PathOPEN Data
+    - Analysis of the evaluated PathVQA Data
+    - Analysis of the evaluated PathOPEN Image Augmentation Data
+
+- data_prep_scripts
+    - Preparation of PathOPEN Dataset in JSON for final delivery
 
 For Data Augmentation
 
