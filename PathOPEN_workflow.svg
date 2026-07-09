@@ -1,0 +1,1525 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="2650"
+   viewBox="0 0 2650 2060"
+   role="img"
+   version="1.1"
+   id="svg84"
+   sodipodi:docname="PathOPEN_workflow.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   height="2060"
+   inkscape:export-filename="main_workflow.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview84"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.45"
+     inkscape:cx="1250"
+     inkscape:cy="743.33333"
+     inkscape:window-width="1920"
+     inkscape:window-height="1022"
+     inkscape:window-x="1728"
+     inkscape:window-y="30"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg84" />
+  <title
+     id="title1">PathOPEN dataset workflow</title>
+  <desc
+     id="desc1">Three-row landscape workflow. Row 1: data collection and QA generation. Row 2: PathVQA filtering and augmentation. Row 3: expert evaluation and outcome.</desc>
+  <defs
+     id="defs1">
+    <marker
+       id="arr"
+       viewBox="0 0 10 10"
+       refX="8"
+       refY="5"
+       markerWidth="6"
+       markerHeight="6"
+       orient="auto-start-reverse">
+      <path
+         d="M 2,1 8,5 2,9"
+         fill="none"
+         stroke="context-stroke"
+         stroke-width="1.5"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         id="path1" />
+    </marker>
+    <style
+       id="style1">
+    text { font-family: Arial, Helvetica, sans-serif; fill: #2C2C2A; }
+    .th  { font-size: 28px; font-weight: 600; }
+    .ts  { font-size: 24px; font-weight: 400; }
+
+    /* c-teal */
+    .c-teal rect, .c-teal ellipse, .c-teal circle { fill: #E1F5EE; stroke: #0F6E56; }
+    .c-teal .th { fill: #085041; }
+    .c-teal .ts { fill: #0F6E56; }
+
+    /* c-purple */
+    .c-purple rect, .c-purple ellipse, .c-purple circle { fill: #EEEDFE; stroke: #534AB7; }
+    .c-purple .th { fill: #3C3489; }
+    .c-purple .ts { fill: #534AB7; }
+
+    /* c-amber */
+    .c-amber rect, .c-amber ellipse, .c-amber circle { fill: #FAEEDA; stroke: #854F0B; }
+    .c-amber .th { fill: #633806; }
+    .c-amber .ts { fill: #854F0B; }
+
+    /* c-blue */
+    .c-blue rect, .c-blue ellipse, .c-blue circle { fill: #E6F1FB; stroke: #185FA5; }
+    .c-blue .th { fill: #0C447C; }
+    .c-blue .ts { fill: #185FA5; }
+
+    /* c-coral */
+    .c-coral rect, .c-coral ellipse, .c-coral circle { fill: #FAECE7; stroke: #993C1D; }
+    .c-coral .th { fill: #712B13; }
+    .c-coral .ts { fill: #993C1D; }
+
+    /* c-gray */
+    .c-gray rect, .c-gray ellipse, .c-gray circle { fill: #F1EFE8; stroke: #5F5E5A; }
+    .c-gray .th { fill: #444441; }
+    .c-gray .ts { fill: #5F5E5A; }
+
+    /* arrows */
+    .arr { stroke: #5F5E5A; stroke-width: 2; fill: none; }
+    line { stroke: #888780; }
+  </style>
+    <marker
+       id="arr-1"
+       viewBox="0 0 10 10"
+       refX="8"
+       refY="5"
+       markerWidth="6"
+       markerHeight="6"
+       orient="auto-start-reverse">
+      <path
+         d="M 2,1 8,5 2,9"
+         fill="none"
+         stroke="context-stroke"
+         stroke-width="1.5"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         id="path1-8" />
+    </marker>
+  </defs>
+  <!-- ═══════════════════════════
+     ROW 1 — Data collection + QA generation
+════════════════════════════ -->
+  <g
+     id="g146">
+    <g
+       class="c-teal"
+       id="g1"
+       transform="translate(385.86087,-18.039883)">
+      <rect
+         x="60"
+         y="44"
+         width="460"
+         height="60"
+         rx="30"
+         stroke-width="1"
+         id="rect1" />
+      <text
+         class="th"
+         x="290"
+         y="74"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#085041"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan93">1 — Data collection</tspan></text>
+    </g>
+    <g
+       class="c-teal"
+       id="g3"
+       transform="matrix(1.0421623,0,0,1.1111743,89.782846,-20.312554)">
+      <rect
+         x="60.049789"
+         y="124.04979"
+         width="1067.1558"
+         height="139.18335"
+         rx="24.455654"
+         stroke-width="1.09943"
+         id="rect2" />
+      <text
+         class="th"
+         x="619.75403"
+         y="153.80286"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text2"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:34.6667px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#085041"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.2335px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan92">Hospital &amp; archived teaching cases</tspan></text>
+      <text
+         class="ts"
+         x="628.00446"
+         y="197.79967"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text3"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#0f6e56"><tspan
+           sodipodi:role="line"
+           id="tspan89"
+           x="628.00446"
+           y="197.79967"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.9668px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Dell Medical School · WSI scanner 1920×1200 px ·</tspan><tspan
+           sodipodi:role="line"
+           id="tspan90"
+           x="628.00446"
+           y="234.47148"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:28.9668px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">0.147 µm/px at 40× · de-identified</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;direction:ltr;fill:#000000"
+         x="595.95648"
+         y="473.12576"
+         id="text91"><tspan
+           sodipodi:role="line"
+           id="tspan91"
+           x="595.95648"
+           y="473.12576" /></text>
+    </g>
+    <rect
+       x="146.15714"
+       y="317.99634"
+       width="536.02252"
+       height="126.97178"
+       rx="21.346025"
+       fill="#e1f5ee"
+       stroke="#1d9e75"
+       stroke-width="1.13933"
+       id="rect3" />
+    <text
+       class="th"
+       x="414.61652"
+       y="356.18234"
+       text-anchor="middle"
+       dominant-baseline="central"
+       fill="#085041"
+       id="text4"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#2c2c2a"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         id="tspan98">157 curated cases</tspan></text>
+    <text
+       class="ts"
+       x="414.61652"
+       y="407.1236"
+       text-anchor="middle"
+       dominant-baseline="central"
+       fill="#0F6E56"
+       id="text5"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#2c2c2a"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         id="tspan117">120 single-image · 37 multi-image</tspan></text>
+    <rect
+       x="698.36041"
+       y="315.62421"
+       width="567.25299"
+       height="126.97376"
+       rx="21.271984"
+       fill="#e1f5ee"
+       stroke="#1d9e75"
+       stroke-width="1.13737"
+       id="rect5" />
+    <text
+       class="th"
+       x="986.11169"
+       y="354.35214"
+       text-anchor="middle"
+       dominant-baseline="central"
+       fill="#085041"
+       id="text6"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#2c2c2a"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         id="tspan97">Metadata per case</tspan></text>
+    <text
+       class="ts"
+       x="981.33099"
+       y="405.56805"
+       text-anchor="middle"
+       dominant-baseline="central"
+       fill="#0F6E56"
+       id="text7"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#2c2c2a"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         id="tspan118">organ · category · regional anatomy</tspan></text>
+  </g>
+  <!-- Microscope art -->
+  <g
+     id="g142"
+     transform="translate(-60.185233,-256.48148)">
+    <rect
+       x="92"
+       y="456"
+       width="100"
+       height="20"
+       rx="6"
+       fill="#5dcaa5"
+       opacity="0.5"
+       id="rect7" />
+    <rect
+       x="108"
+       y="456"
+       width="18"
+       height="172"
+       rx="6"
+       fill="#5dcaa5"
+       opacity="0.45"
+       id="rect8" />
+    <rect
+       x="84"
+       y="440"
+       width="72"
+       height="36"
+       rx="10"
+       fill="#1d9e75"
+       opacity="0.65"
+       id="rect9" />
+    <rect
+       x="114"
+       y="396"
+       width="18"
+       height="52"
+       rx="6"
+       fill="#0f6e56"
+       opacity="0.75"
+       id="rect10" />
+    <polygon
+       points="140,476 132,520 106,520 98,476 "
+       fill="#1d9e75"
+       opacity="0.65"
+       id="polygon10" />
+    <rect
+       x="79.468086"
+       y="555.70209"
+       width="88"
+       height="14"
+       rx="4"
+       fill="#5dcaa5"
+       opacity="0.45"
+       id="rect11" />
+  </g>
+  <!-- Arrow right row 1 -->
+  <line
+     x1="1268.551"
+     y1="312.37149"
+     x2="1364.551"
+     y2="312.37149"
+     stroke="#1D9E75"
+     stroke-width="3.2"
+     marker-end="url(#arr)"
+     id="line15" />
+  <!-- Pathologist art -->
+  <g
+     id="g2"
+     transform="translate(-6,-16)">
+    <circle
+       cx="2562.8352"
+       cy="240.88889"
+       r="36"
+       fill="#afa9ec"
+       opacity="0.5"
+       id="circle16" />
+    <rect
+       x="2532.8352"
+       y="280.88889"
+       width="60"
+       height="76"
+       rx="18"
+       fill="#7f77dd"
+       opacity="0.4"
+       id="rect16" />
+    <rect
+       x="2482.8352"
+       y="212.88889"
+       width="56"
+       height="88"
+       rx="8"
+       fill="#eeedfe"
+       stroke="#7f77dd"
+       stroke-width="1"
+       id="rect17" />
+    <rect
+       x="2502.8352"
+       y="202.88889"
+       width="18"
+       height="16"
+       rx="4"
+       fill="#afa9ec"
+       id="rect18" />
+    <line
+       x1="2486.8352"
+       y1="240.88889"
+       x2="2532.8352"
+       y2="240.88889"
+       stroke="#AFA9EC"
+       stroke-width="2.4"
+       id="line18" />
+    <line
+       x1="2486.8352"
+       y1="258.88889"
+       x2="2532.8352"
+       y2="258.88889"
+       stroke="#AFA9EC"
+       stroke-width="2.4"
+       id="line19" />
+    <line
+       x1="2486.8352"
+       y1="276.88889"
+       x2="2514.8352"
+       y2="276.88889"
+       stroke="#AFA9EC"
+       stroke-width="2.4"
+       id="line20" />
+  </g>
+  <text
+     class="ts"
+     x="2540.8352"
+     y="370.88889"
+     text-anchor="middle"
+     fill="#534AB7"
+     id="text20"
+     style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;text-anchor:middle;fill:#2c2c2a"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       id="tspan1">2 pathologists</tspan></text>
+  <g
+     id="g148"
+     transform="translate(-10)">
+    <g
+       class="c-purple"
+       id="g15"
+       transform="translate(529.39814,-22.484327)">
+      <rect
+         x="1128"
+         y="44"
+         width="520"
+         height="60"
+         rx="30"
+         stroke-width="1"
+         id="rect15" />
+      <text
+         class="th"
+         x="1388"
+         y="74"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text15"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:34.6667px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#3c3489"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan94">2 — QA pair generation</tspan></text>
+    </g>
+    <g
+       class="c-purple"
+       id="g23"
+       transform="translate(292.83526,-11.111111)">
+      <rect
+         x="1080.2629"
+         y="126.30515"
+         width="364.88257"
+         height="159.93898"
+         rx="22.523615"
+         stroke-width="1.06102"
+         id="rect20" />
+      <text
+         class="th"
+         x="1262"
+         y="162.35214"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text21"
+         style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#3c3489"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan86">Open-ended</tspan></text>
+      <text
+         class="ts"
+         x="1264"
+         y="208.90143"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text22"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#534ab7"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan87">309 questions</tspan></text>
+      <text
+         class="ts"
+         x="1266.3522"
+         y="251.45071"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text23"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#534ab7"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan88">correct/wrong answers</tspan></text>
+    </g>
+    <g
+       class="c-purple"
+       id="g26"
+       transform="translate(292.83526,-11.111111)">
+      <rect
+         x="1480"
+         y="124"
+         width="324"
+         height="160"
+         rx="20"
+         stroke-width="1"
+         id="rect23" />
+      <text
+         class="th"
+         x="1642"
+         y="162.35214"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text24"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:34.6667px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#3c3489"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan95">MCQ</tspan></text>
+      <text
+         class="ts"
+         x="1642"
+         y="208.62679"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text25"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#534ab7"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan113">157 Qs · 5 options</tspan></text>
+      <text
+         class="ts"
+         x="1642"
+         y="253.72536"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text26"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#534ab7"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan114">posed as open-ended</tspan></text>
+    </g>
+    <g
+       class="c-purple"
+       id="g29"
+       transform="translate(292.83526,-11.111111)">
+      <rect
+         x="1832"
+         y="124"
+         width="324"
+         height="160"
+         rx="20"
+         stroke-width="1"
+         id="rect26" />
+      <text
+         class="th"
+         x="1994"
+         y="169.17607"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text27"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:34.6667px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#3c3489"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan96">Close-ended</tspan></text>
+      <text
+         class="ts"
+         x="1994"
+         y="214.90143"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text28"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#534ab7"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan115">157 yes/no questions</tspan></text>
+      <text
+         class="ts"
+         x="1994"
+         y="254"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text29"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#534ab7"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan116">image-grounded</tspan></text>
+    </g>
+    <line
+       x1="1582.8352"
+       y1="272.88889"
+       x2="1582.8352"
+       y2="324.88889"
+       stroke="#7F77DD"
+       stroke-width="2.2"
+       fill="none"
+       id="line29" />
+    <line
+       x1="1934.8352"
+       y1="272.88889"
+       x2="1934.8352"
+       y2="324.88889"
+       stroke="#7F77DD"
+       stroke-width="2.2"
+       fill="none"
+       id="line30" />
+    <line
+       x1="2286.8352"
+       y1="272.88889"
+       x2="2286.8352"
+       y2="324.88889"
+       stroke="#7F77DD"
+       stroke-width="2.2"
+       fill="none"
+       id="line31" />
+    <path
+       d="m 1582.8353,324.88889 h 352"
+       fill="none"
+       stroke="#7f77dd"
+       stroke-width="2.2"
+       id="path31" />
+    <path
+       d="m 2286.8353,324.88889 h -352"
+       fill="none"
+       stroke="#7f77dd"
+       stroke-width="2.2"
+       id="path32" />
+    <line
+       x1="1934.8352"
+       y1="324.88889"
+       x2="1934.8352"
+       y2="372.88889"
+       stroke="#7F77DD"
+       stroke-width="3"
+       marker-end="url(#arr)"
+       id="line32" />
+    <g
+       class="c-purple"
+       id="g33"
+       transform="translate(292.83526,-11.111111)">
+      <rect
+         x="1128"
+         y="384"
+         width="1028"
+         height="116"
+         rx="22"
+         stroke-width="1.6"
+         id="rect32" />
+      <text
+         class="th"
+         x="1642"
+         y="428"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text32"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:34.6667px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#3c3489"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan99">Raw PathOPEN dataset</tspan></text>
+      <text
+         class="ts"
+         x="1642"
+         y="472"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text33"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#534ab7"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan119">688 correct pairs · 1,273 wrong pairs · 231 close-ended pairs</tspan></text>
+    </g>
+  </g>
+  <!-- row divider -->
+  <line
+     x1="40"
+     y1="548"
+     x2="2360"
+     y2="548"
+     stroke="#B4B2A9"
+     stroke-width="1.4"
+     stroke-dasharray="12, 10"
+     opacity="0.5"
+     id="line33" />
+  <!-- ═══════════════════════════
+     ROW 2 — PathVQA filtering + Augmentation
+════════════════════════════ -->
+  <line
+     x1="1842.1686"
+     y1="506.82394"
+     x2="1842.1686"
+     y2="618.82391"
+     stroke="#7F77DD"
+     stroke-width="3"
+     marker-end="url(#arr)"
+     id="line34" />
+  <!-- Aug tile art -->
+  <g
+     id="g145"
+     transform="translate(58.333333,5.5555556)">
+    <line
+       x1="1842.8174"
+       y1="684.54187"
+       x2="1842.8174"
+       y2="765.07611"
+       stroke="#7F77DD"
+       stroke-width="2.54391"
+       marker-end="url(#arr-1)"
+       id="line34-3"
+       style="stroke:#888780;marker-end:url(#arr-1)" />
+    <g
+       class="c-amber"
+       id="g50"
+       transform="translate(388.96397,49.922501)">
+      <rect
+         x="1128"
+         y="572"
+         width="640"
+         height="60"
+         rx="30"
+         stroke-width="1"
+         id="rect49" />
+      <text
+         class="th"
+         x="1459.4227"
+         y="601.1933"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text50"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:36.4484px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#633806;stroke-width:1.30173"><tspan
+           sodipodi:role="line"
+           id="tspan84"
+           x="1459.4227"
+           y="601.1933"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:1.30173">3 — Image augmentation × 30</tspan></text>
+    </g>
+    <rect
+       x="2437.3447"
+       y="610.58466"
+       width="104"
+       height="104"
+       rx="12"
+       fill="#faeeda"
+       stroke="#ef9f27"
+       stroke-width="1.8"
+       id="rect50" />
+    <circle
+       cx="2471.3447"
+       cy="642.58466"
+       r="10"
+       fill="#d4537e"
+       opacity="0.5"
+       id="circle50" />
+    <circle
+       cx="2501.3447"
+       cy="656.58466"
+       r="8"
+       fill="#7f77dd"
+       opacity="0.5"
+       id="circle51" />
+    <circle
+       cx="2477.3447"
+       cy="678.58466"
+       r="7"
+       fill="#d4537e"
+       opacity="0.4"
+       id="circle52" />
+    <text
+       class="ts"
+       x="2489.3447"
+       y="746.58466"
+       text-anchor="middle"
+       fill="#633806"
+       id="text52"
+       style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;text-anchor:middle;fill:#2c2c2a"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         id="tspan2">original</tspan></text>
+    <line
+       x1="2433.3447"
+       y1="662.58466"
+       x2="2393.3447"
+       y2="638.58466"
+       stroke="#EF9F27"
+       stroke-width="1.6"
+       opacity="0.7"
+       id="line52" />
+    <line
+       x1="2433.3447"
+       y1="662.58466"
+       x2="2393.3447"
+       y2="662.58466"
+       stroke="#EF9F27"
+       stroke-width="1.6"
+       opacity="0.7"
+       id="line53" />
+    <line
+       x1="2433.3447"
+       y1="662.58466"
+       x2="2393.3447"
+       y2="686.58466"
+       stroke="#EF9F27"
+       stroke-width="1.6"
+       opacity="0.7"
+       id="line54" />
+    <rect
+       x="2276.5925"
+       y="720.97607"
+       width="84"
+       height="84"
+       rx="10"
+       fill="#faeeda"
+       stroke="#ef9f27"
+       stroke-width="1"
+       opacity="0.8"
+       transform="rotate(-3)"
+       id="rect54" />
+    <rect
+       x="2335.9409"
+       y="567.96405"
+       width="84"
+       height="76"
+       rx="10"
+       fill="#faeeda"
+       stroke="#ef9f27"
+       stroke-width="1"
+       opacity="0.6"
+       transform="rotate(2)"
+       id="rect55" />
+    <g
+       class="c-amber"
+       id="g58"
+       transform="translate(301.03467,118.28144)">
+      <rect
+         x="1128"
+         y="652"
+         width="880"
+         height="136"
+         rx="20"
+         stroke-width="1"
+         id="rect56" />
+      <text
+         class="th"
+         x="1568"
+         y="684.07751"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text56"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:34.6667px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#633806"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan100">Transform library</tspan></text>
+      <text
+         class="ts"
+         x="1568"
+         y="723.25354"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text57"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#854f0b"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan126">16 transforms · 5 randomly selected per operation</tspan></text>
+      <text
+         class="ts"
+         x="1563.8617"
+         y="765.06152"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text58-0"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#854f0b"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan127">magnitude 0–5 · applied in random order</tspan></text>
+    </g>
+    <line
+       x1="1843.2318"
+       y1="912.00684"
+       x2="1843.2318"
+       y2="1007.9866"
+       stroke="#BA7517"
+       stroke-width="3.92751"
+       marker-end="url(#arr)"
+       id="line58" />
+    <g
+       class="c-amber"
+       id="g61"
+       transform="translate(283.46431,159.22502)">
+      <rect
+         x="1128"
+         y="852"
+         width="880"
+         height="136"
+         rx="20"
+         stroke-width="1.6"
+         id="rect58" />
+      <text
+         class="th"
+         x="1570.2747"
+         y="879.5282"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text59"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:34.6667px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:central;text-anchor:middle;fill:#633806"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan101">~30,000 augmented samples</tspan></text>
+      <text
+         class="ts"
+         x="1586.1971"
+         y="918.97894"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text60"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Arial, Helvetica, sans-serif;-inkscape-font-specification:'Arial, Helvetica, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;direction:ltr;dominant-baseline:central;text-anchor:middle;fill:#854f0b"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan128">+20,640 open-ended correct · +38,190 wrong pairs</tspan></text>
+      <text
+         class="ts"
+         x="1570.2747"
+         y="961.80286"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text61"
+         style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#854f0b"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan85">+6,930 close-ended pairs</tspan></text>
+    </g>
+  </g>
+  <line
+     x1="1845.5065"
+     y1="1150.6758"
+     x2="1845.5065"
+     y2="1429.0985"
+     stroke="#BA7517"
+     stroke-width="2.26897"
+     fill="none"
+     id="line61" />
+  <g
+     id="g141"
+     transform="matrix(1.5788984,0,0,1.4808591,-420.28593,-61.944714)">
+    <circle
+       cx="310.1702"
+       cy="523.12762"
+       r="34"
+       fill="#eeedfe"
+       stroke="#7f77dd"
+       stroke-width="1.2"
+       id="circle11" />
+    <circle
+       cx="296.44681"
+       cy="516.19147"
+       r="7"
+       fill="#d4537e"
+       opacity="0.6"
+       id="circle12" />
+    <circle
+       cx="314.44681"
+       cy="510.1915"
+       r="6"
+       fill="#7f77dd"
+       opacity="0.55"
+       id="circle13" />
+    <circle
+       cx="306.44681"
+       cy="536.19147"
+       r="6"
+       fill="#d4537e"
+       opacity="0.45"
+       id="circle14" />
+    <circle
+       cx="324.44681"
+       cy="526.19147"
+       r="5"
+       fill="#7f77dd"
+       opacity="0.55"
+       id="circle15" />
+  </g>
+  <g
+     id="g147">
+    <g
+       class="c-blue"
+       id="g34"
+       transform="translate(89.424748,-3.7628056)">
+      <rect
+         x="60"
+         y="572"
+         width="400"
+         height="60"
+         rx="30"
+         stroke-width="1"
+         id="rect34" />
+      <text
+         class="th"
+         x="260"
+         y="602"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text34"
+         style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#0c447c"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan102">PathVQA source</tspan></text>
+    </g>
+    <polygon
+       points="136,756 72,660 680,660 616,756 "
+       fill="#b5d4f4"
+       stroke="#378add"
+       stroke-width="1.2"
+       id="polygon34"
+       transform="matrix(1.2152796,0,0,0.99825796,55.344352,1.2333674)" />
+    <rect
+       x="453.77777"
+       y="756"
+       width="48"
+       height="56"
+       rx="6"
+       fill="#85b7eb"
+       stroke="#378add"
+       stroke-width="1"
+       id="rect35" />
+    <circle
+       cx="237.77777"
+       cy="682"
+       r="8"
+       fill="#378add"
+       opacity="0.5"
+       id="circle35" />
+    <circle
+       cx="309.77777"
+       cy="668"
+       r="8"
+       fill="#378add"
+       opacity="0.5"
+       id="circle36" />
+    <circle
+       cx="397.77777"
+       cy="664"
+       r="8"
+       fill="#378add"
+       opacity="0.5"
+       id="circle37" />
+    <circle
+       cx="485.77777"
+       cy="664"
+       r="8"
+       fill="#378add"
+       opacity="0.5"
+       id="circle38" />
+    <circle
+       cx="573.77777"
+       cy="668"
+       r="8"
+       fill="#378add"
+       opacity="0.5"
+       id="circle39" />
+    <circle
+       cx="657.77777"
+       cy="680"
+       r="8"
+       fill="#378add"
+       opacity="0.5"
+       id="circle40" />
+    <circle
+       cx="729.77777"
+       cy="696"
+       r="8"
+       fill="#378add"
+       opacity="0.5"
+       id="circle41" />
+    <text
+       class="ts"
+       x="515.34814"
+       y="720.78851"
+       text-anchor="middle"
+       fill="#0C447C"
+       id="text41"
+       style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;text-anchor:middle;fill:#2c2c2a"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         id="tspan120">32,799 QA pairs · 4,998 images</tspan></text>
+    <line
+       x1="477.77777"
+       y1="812"
+       x2="477.77777"
+       y2="868"
+       stroke="#378ADD"
+       stroke-width="3"
+       marker-end="url(#arr)"
+       id="line41" />
+    <g
+       class="c-blue"
+       id="g44"
+       transform="translate(97.777778)">
+      <rect
+         x="60"
+         y="868"
+         width="680"
+         height="136"
+         rx="20"
+         stroke-width="1"
+         id="rect41" />
+      <text
+         class="th"
+         x="395.72534"
+         y="900.90143"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text42"
+         style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#0c447c"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan103">H&amp;E filter</tspan></text>
+      <text
+         class="ts"
+         x="402.27466"
+         y="942.35211"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text43"
+         style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#185fa5"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan121">HistoCartography nuclei detection</tspan></text>
+      <text
+         class="ts"
+         x="397.72534"
+         y="980.35211"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text44"
+         style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#185fa5"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan122">→ 1,504 images · 8,992 pairs retained</tspan></text>
+    </g>
+    <line
+       x1="497.77777"
+       y1="1004"
+       x2="497.77777"
+       y2="1060"
+       stroke="#378ADD"
+       stroke-width="3"
+       marker-end="url(#arr)"
+       id="line44" />
+    <g
+       class="c-blue"
+       id="g47"
+       transform="translate(97.777778)">
+      <rect
+         x="60"
+         y="1060"
+         width="680"
+         height="136"
+         rx="20"
+         stroke-width="1"
+         id="rect44" />
+      <text
+         class="th"
+         x="400"
+         y="1094"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text45"
+         style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#0c447c"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan104">Word-count filter</tspan></text>
+      <text
+         class="ts"
+         x="400"
+         y="1136"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text46"
+         style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#185fa5"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan123">Q + A ≥ 5 words</tspan></text>
+      <text
+         class="ts"
+         x="400"
+         y="1172"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text47"
+         style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#185fa5"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan124">≈10% of original pairs retained</tspan></text>
+    </g>
+    <line
+       x1="497.77777"
+       y1="1196"
+       x2="497.77777"
+       y2="1252"
+       stroke="#378ADD"
+       stroke-width="3"
+       marker-end="url(#arr)"
+       id="line47" />
+    <g
+       class="c-blue"
+       id="g49"
+       transform="translate(97.777778)">
+      <rect
+         x="60"
+         y="1252"
+         width="680"
+         height="136"
+         rx="20"
+         stroke-width="1.6"
+         id="rect47" />
+      <text
+         class="th"
+         x="400"
+         y="1300"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text48"
+         style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#0c447c"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan105">PathVQA filtered</tspan></text>
+      <text
+         class="ts"
+         x="400"
+         y="1344"
+         text-anchor="middle"
+         dominant-baseline="central"
+         id="text49"
+         style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#185fa5"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan125">612 open-ended · 3,005 close-ended</tspan></text>
+    </g>
+  </g>
+  <line
+     x1="497.77777"
+     y1="1388"
+     x2="497.77777"
+     y2="1420"
+     stroke="#378ADD"
+     stroke-width="2.8"
+     fill="none"
+     id="line62" />
+  <!-- row divider -->
+  <line
+     x1="40"
+     y1="1430"
+     x2="2360"
+     y2="1430"
+     stroke="#B4B2A9"
+     stroke-width="1.4"
+     stroke-dasharray="12, 10"
+     opacity="0.5"
+     id="line63" />
+  <!-- ═══════════════════════════
+     ROW 3 — Expert evaluation
+════════════════════════════ -->
+  <path
+     d="m 498.15648,1420 v 40 h 726.57692 v 44"
+     fill="none"
+     stroke="#378add"
+     stroke-width="3.12315"
+     id="path63" />
+  <path
+     d="m 1845.3482,1420 v 40 h -617.8031 v 44"
+     fill="none"
+     stroke="#ba7517"
+     stroke-width="2.72576"
+     id="path64" />
+  <line
+     x1="1225.1122"
+     y1="1466.824"
+     x2="1225.1122"
+     y2="1521.8368"
+     stroke="#888780"
+     stroke-width="3.57813"
+     marker-end="url(#arr)"
+     id="line64" />
+  <!-- Evaluator circles art -->
+  <g
+     id="g140"
+     transform="translate(282.05575,11.373216)">
+    <g
+       id="g137"
+       transform="translate(-334.37254,118.28144)">
+      <circle
+         cx="2144"
+         cy="1696"
+         r="36"
+         fill="#f5c4b3"
+         stroke="#d85a30"
+         stroke-width="1"
+         id="circle66" />
+      <circle
+         cx="2200"
+         cy="1668"
+         r="36"
+         fill="#f5c4b3"
+         stroke="#d85a30"
+         stroke-width="1"
+         id="circle67" />
+      <circle
+         cx="2228"
+         cy="1720"
+         r="34"
+         fill="#f5c4b3"
+         stroke="#d85a30"
+         stroke-width="1"
+         id="circle68" />
+      <circle
+         cx="2168"
+         cy="1744"
+         r="34"
+         fill="#f5c4b3"
+         stroke="#d85a30"
+         stroke-width="1"
+         id="circle69" />
+      <circle
+         cx="2112"
+         cy="1724"
+         r="32"
+         fill="#f5c4b3"
+         stroke="#d85a30"
+         stroke-width="1"
+         id="circle70" />
+      <circle
+         cx="2144"
+         cy="1685"
+         r="12"
+         fill="#d85a30"
+         opacity="0.6"
+         id="circle71" />
+      <circle
+         cx="2200"
+         cy="1657"
+         r="12"
+         fill="#d85a30"
+         opacity="0.6"
+         id="circle72" />
+      <circle
+         cx="2228"
+         cy="1709"
+         r="12"
+         fill="#d85a30"
+         opacity="0.6"
+         id="circle73" />
+      <circle
+         cx="2168"
+         cy="1733"
+         r="12"
+         fill="#d85a30"
+         opacity="0.6"
+         id="circle74" />
+      <circle
+         cx="2112"
+         cy="1713"
+         r="12"
+         fill="#d85a30"
+         opacity="0.6"
+         id="circle75" />
+    </g>
+    <g
+       id="g136"
+       transform="translate(68.239294,2.2746431)">
+      <g
+         class="c-coral"
+         id="g64"
+         transform="matrix(1.0703711,0,0,0.99946382,-86.3051,9.3696444)">
+        <rect
+           x="160"
+           y="1498"
+           width="1648"
+           height="64"
+           rx="32"
+           stroke-width="1"
+           id="rect64" />
+        <text
+           class="th"
+           x="984"
+           y="1530"
+           text-anchor="middle"
+           dominant-baseline="central"
+           id="text64"
+           style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#712b13"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan106">4 — Expert evaluation · 5 clinical pathologists · rating scale −1 to 2</tspan></text>
+      </g>
+      <rect
+         x="130.51064"
+         y="1598.2782"
+         width="778.83051"
+         height="59.838017"
+         rx="21.785469"
+         fill="#e1f5ee"
+         stroke="#1d9e75"
+         stroke-width="1.024"
+         id="rect65" />
+      <text
+         class="th"
+         x="516.51392"
+         y="1630.4718"
+         text-anchor="middle"
+         dominant-baseline="central"
+         fill="#085041"
+         id="text65"
+         style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#2c2c2a"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan107">PathOPEN — Benchmarks 1 · 2 · 3 · 4</tspan></text>
+      <rect
+         x="918.72192"
+         y="1599.9688"
+         width="891.83679"
+         height="59.907543"
+         rx="18.775513"
+         fill="#e6f1fb"
+         stroke="#378add"
+         stroke-width="0.935956"
+         id="rect66" />
+      <text
+         class="th"
+         x="1366.915"
+         y="1632.1971"
+         text-anchor="middle"
+         dominant-baseline="central"
+         fill="#0C447C"
+         id="text66"
+         style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#2c2c2a"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+           id="tspan108">PathVQA filtered — Benchmarks 1 · 3</tspan></text>
+      <g
+         class="c-coral"
+         id="g76"
+         transform="translate(22.746431,22.746431)">
+        <rect
+           x="160"
+           y="1664"
+           width="692"
+           height="124"
+           rx="20"
+           stroke-width="1"
+           id="rect75" />
+        <text
+           class="th"
+           x="503.72534"
+           y="1707.176"
+           text-anchor="middle"
+           dominant-baseline="central"
+           id="text75"
+           style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#712b13"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan109">Benchmark 1</tspan></text>
+        <text
+           class="ts"
+           x="506"
+           y="1758"
+           text-anchor="middle"
+           dominant-baseline="central"
+           id="text76"
+           style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#993c1d"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan129">Open-ended correct answers</tspan></text>
+      </g>
+      <g
+         class="c-coral"
+         id="g78"
+         transform="translate(75.063223,11.373216)">
+        <rect
+           x="880"
+           y="1675.3732"
+           width="692"
+           height="124"
+           rx="20"
+           stroke-width="1"
+           id="rect76" />
+        <text
+           class="th"
+           x="1226"
+           y="1716.2745"
+           text-anchor="middle"
+           dominant-baseline="central"
+           id="text77"
+           style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#712b13"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan110">Benchmark 2</tspan></text>
+        <text
+           class="ts"
+           x="1226"
+           y="1764.824"
+           text-anchor="middle"
+           dominant-baseline="central"
+           id="text78"
+           style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#993c1d"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan130">Open-ended wrong answers</tspan></text>
+      </g>
+      <g
+         class="c-coral"
+         id="g80"
+         transform="translate(22.746431,40.943576)">
+        <rect
+           x="160"
+           y="1812"
+           width="692"
+           height="124"
+           rx="20"
+           stroke-width="1"
+           id="rect78" />
+        <text
+           class="th"
+           x="506"
+           y="1855.176"
+           text-anchor="middle"
+           dominant-baseline="central"
+           id="text79"
+           style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#712b13"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan111">Benchmark 3</tspan></text>
+        <text
+           class="ts"
+           x="506"
+           y="1906"
+           text-anchor="middle"
+           dominant-baseline="central"
+           id="text80"
+           style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#993c1d"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan131">Close-ended answers</tspan></text>
+      </g>
+      <g
+         class="c-coral"
+         id="g82"
+         transform="translate(72.788577,40.943576)">
+        <rect
+           x="880"
+           y="1812"
+           width="692"
+           height="124"
+           rx="20"
+           stroke-width="1"
+           id="rect80" />
+        <text
+           class="th"
+           x="1226"
+           y="1855.176"
+           text-anchor="middle"
+           dominant-baseline="central"
+           id="text81"
+           style="font-weight:600;font-size:28px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#712b13"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:34.6667px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan112">Benchmark 4</tspan></text>
+        <text
+           class="ts"
+           x="1226"
+           y="1906"
+           text-anchor="middle"
+           dominant-baseline="central"
+           id="text82"
+           style="font-weight:400;font-size:24px;font-family:Arial, Helvetica, sans-serif;dominant-baseline:central;text-anchor:middle;fill:#993c1d"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan132">Augmented image pairs</tspan></text>
+      </g>
+    </g>
+  </g>
+  <metadata
+     id="metadata137">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>PathOPEN dataset workflow</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>
