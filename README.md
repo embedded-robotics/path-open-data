@@ -1,5 +1,5 @@
 # PathOPEN Dataset
-This repository will deal with the following things
+This repository is the main source of the PathOPEN Dataset and it will deal with the following things
 
 - data_analysis_scripts
     - Analysis of RAW PathOPEN Dataset collected by clinical pathologists
@@ -29,3 +29,6 @@ For Data Augmentation
 _REPLACE = 225 -> This will replace the background to a semi-white color to match the slides background
 available_ops = ['Scaling','TranslateX', 'TranslateY','ShearX', 'ShearY','Brightness', 'Sharpness','Color', 'Contrast','Rotate','Equalize', 'HsvH','HsvS','HsvV','HedH','HedE','HedD'] -> We are not doing Elastic, Gaussian Blur or Gaussian Noise operation since that tends to disturb the data to an extent which is not identifiable
 
+## Main Workflow of Curating PathOPEN Dataset
+
+![Main Workflow of Curating PathOPEN Dataset](main_workflow.png)
