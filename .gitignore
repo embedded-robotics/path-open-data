@@ -1,9 +1,5 @@
 input/*
-DeepSeek-VL2/*
-LLaVA/*
-LLaVA-Med/*
-quilt-llava/*
-MedTrinity-25M/*
+vlm_data_archive/*
 pathology_test_data/*
 pathology_images_augmented/*
 pathology-he-autoaugmetation/*
