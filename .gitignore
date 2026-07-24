@@ -12,7 +12,9 @@ histocartography/*
 pathvqa-histopathology/*
 data_eval_analysis_scripts/input/*
 data_prep_scripts/output/*
-PathBench/*
+datasets/PathBench/*
+datasets/Quilt_VQA/*
+datasets/PathMMU/*
 *.csv
 *.env
 box_config.json
