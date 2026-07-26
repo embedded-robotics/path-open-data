@@ -1,0 +1,81 @@
+image_name,question,original_responses,intern-vl3-response
+ck_PTGC_2x.jpeg,How can you best describe the low-power pattern observed in this image of a lymph node?,"The lymph node shows a mixed follicular and interfollicular expansion, with secondary follicles showing germinal centers of varying sizes, include some larger ones in the center","At low magnification, the lymph node shows the following histological features:
+
+- The **lymph node architecture is disrupted**, with large areas replaced by dense cell infiltrates.
+- There is **significant effacement** of the normal follicular and paracortical architecture.
+- **Large areas** are filled with **heterogeneous cell populations**, including small to medium-sized lymphocytes and a significant number of eosinophilic (purple-staining), likely necrotic cells.
+- **Lobular boundaries are obliterated**, and the normally distinct cortical and medullary areas are lost.
+- There are **white spaces or clear areas**, which could represent necrotic debris or spaces created by cell death.
+- **Areas of denser cellularity** with hyperchromatic nuclei may indicate regions of active neoplastic proliferation or high mitotic activity.
+
+Overall, the low-power pattern is characterized by a **lymph node converted into a homogeneous mass of atypical cells**, with loss of normal follicular and medullary structures and significant architectural disorganization."
+ck_PTGC_2x.jpeg,What are three main differential diagnostic considerations if this lymph node was sampled from a young teenager with solitary adenopathy?,"Based on the low-power pattern, the primary considerations would be a non-specific reactive hyperplasia, progressive transformation of germinal centers or possibly nodular lymphocyte predominant Hodgkin lymphoma.","When reviewing a case of lymphadenopathy in a young teenager, consideration of three main differential diagnostic considerations is essential:
+
+1. **Infectious Causes**:
+   - **Infectious Mononucleosis** (Epstein-Barr Virus): Characterized by lymphocytosis and atypical lymphocytes.
+   - **Tuberculosis** (especially in regions where TB is endemic): May present as a granulomatous reaction with caseating necrosis.
+   - **Toxoplasmosis**: Caused by *Toxoplasma gondii* infection, often presenting with a granulomatous lymphadenitis.
+
+2. **Granulomatous Inflammation**:
+   - **Sarcoidosis**: Non-caseating granulomas without specific infectious etiology.
+   - **Foreign Body Granulomas**: Resulting from an unresolved chronic foreign body reaction.
+
+3. **Neoplastic Diseases**:
+   - **Hodgkin Lymphoma**: Characterized by the presence of Reed-Sternberg cells and typically presents with painless adenopathy.
+   - **Non-Hodgkin Lymphoma** (e.g., Lymphoblastic Lymphoma): In young individuals, it can present with solitary adenopathy and requires further immunophenotyping.
+   - **Metastatic Carcinoma**: Rare but important to consider if there is a known primary malignancy.
+
+Thus, the three main differential diagnostic considerations are:
+
+1. **Infectious Causes**
+2. **Granulomatous Inflammation**
+3. **Neoplastic Diseases**"
+ck_PTGC_5x.jpeg,What is the morphologic alteration being depicted in this enlarged solitary lymph node from a young child?,"The image shows a central enlarged, somewhat irregular secondary follicle showing changes of progressive transformation of the germinal center. You can see normal secondary follicles at the right side of the image.","The morphologic alteration depicted is characterized by a diffuse infiltration of small, monotonous lymphoid cells replacing the normal trabecular architecture of the lymph node. Key features include:
+
+- Disruption of the lymphoid follicles
+- Areas of hypercellularity with parallel, fibrous bands
+- Absence of germinal centers
+- Presence of pseudovascular spaces lined by atypical epithelial-like cells
+- Evidence of necrosis and fibrosis
+
+These features are indicative of a primary lymphoma or a metastatic disease within the lymph node."
+ck_PTGC_5x.jpeg,What is the expected immunoarchitecture of the  mantle cells in the alteration being depicted in the image?,This image shows an enlarged secondary follicle exhibiting progressive transformation of the germinal centers. The  immunoarchitecture of the mantle cells is abnormal with mantle cells internalized between islands of the germinal center.,"The mantle cell lymphoma (MCL) has a characteristic immunoarchitecture that includes the following features:
+
+- A diffuse proliferation of small to medium-sized B cells.
+- These mantle cells are typically arranged in a 'mantle' pattern, forming sheets or clusters of cells.
+- They are intermingled with fewer small lymphocytes.
+- The cells often exhibit follicle center lymphoma (FCL) immunophenotype markers, including CD10, BCL2, and BCL6 expression.
+- The plasma cells are usually scant or absent.
+- The presence of infiltrative bands of tumor cells within the lymph node architecture is common.
+- Areas of fibrosis or sclerosis may be observed in advanced cases.
+
+Thus, the expected immunoarchitecture is characterized by a diffuse, mantle-like proliferation of small to medium-sized B cells with specific immunophenotypic markers and a characteristic lymph node architecture."
+ck_serositis_4x.jpg,What is the most common source for the change depicted in this tissue from the bowel of a 8 day old neonate with distension?,"The changes here show extensive serositis, with fibrinous debris, serosal fibrosis and degeneration, which is typically seen in necrotizing enterocolitis.","The histopathological change depicted in the tissue from the bowel of an 8-day-old neonate with distension is most commonly due to meconium ileus. This condition results from an obstruction of the small bowel due to the accumulation of meconium, the first stool of the newborn, which is characterized by its high iron and phospholipid content. In conditions like cystic fibrosis, there is impaired electrolyte (particularly sodium and chloride) and water absorption in the intestine, leading to the formation of sticky, thick meconium that cannot be passed, causing intestinal obstruction.
+
+Other possible causes for bowel distension in a neonate include:
+
+1. **Hypertrophic pyloric stenosis**: Leads to recurrent vomiting and abdominal distension.
+2. **Intestinal atresias or obstructions**: Such as duodenal obstruction.
+3. **Meconium plug syndrome**: Less specific but still a potential cause.
+4. **Congenital malformations**: Such as Hirschsprung's disease, which can present similarly but with a distinct histological pattern.
+
+Given the histological features suggestive of meconium accumulation and the clinical presentation of distension in a neonate, meconium ileus is typically the primary consideration."
+ck_serositis_4x.jpg,What is the specific anatomic region shown in the image on the right half of the image?,"The right half shows the muscularis propria and inflamed serosa of the bowel, specifically the small intestine.","The specific anatomic region shown on the right half of the image is the **Muscularis propria** of the colon. This region consists of thick, obliquely oriented smooth muscle fibers that form the muscularis externa. It lacks the glandular structures seen in the mucosa layer."
+ck_steatohepatitis_100x.jpg,"If these histologic changes included conspicuous portal plasma cells, what would be the primary consideration for the diagnosis?","There is fatty liver disease and if concurrent plasma cell inflammation in the portal areas are present, one should consider auto immune hepatitis","If conspicuous portal plasma cells are present along with architectural distortion similar to alcoholic liver disease, the primary consideration for the diagnosis would be autoimmune hepatitis. Specifically, the combination of portal inflammation with plasma cell infiltration (typically >10 plasma cells/high-power field) leads to a suspicion of autoimmune hepatitis rather than alcoholic liver disease.
+
+Thus, the primary consideration for the diagnosis is:
+\[
+\boxed{\text{Autoimmune Hepatitis}}
+\]"
+ck_steatohepatitis_100x.jpg,What would the primary histologic feature to suggest a diagnosis of Wilson's disease from the image?,"Wilson's disease has many non-specific findings and in this image, the presence of macrovesicular steatosis is a clue.","The primary histologic feature to suggest a diagnosis of Wilson's disease from the image is the presence of **spherical cyst-like spaces in the liver parenchyma**. These spaces represent foam cells, which are macrophages that have taken up excess copper. The image shows a liver section with:
+
+\\[
+\\text{Spherical cyst-like spaces} = \\text{Foam cells filled with accumulated copper}
+\\]
+
+Thus, the primary histologic feature is:
+
+\\[
+\\boxed{\\text{Spherical cyst-like spaces in the liver parenchyma}}
+\\]"
+ck_steatohepatitis_200x.jpg,"In an overweight adolescent with mildly increased transaminases, what diagnosis do the portal changes here suggest?","In the background of steatosis, there is increased portal inflammation with expansion by lymphocytes and few eosinophils, which suggests steatohepatitis","In an overweight adolescent with mildly increased transaminases, the portal changes featuring fibrous bands separating nodules suggest the diagnosis of **fatty liver disease (non-alcoholic steatohepatitis, NASH)**. The underlying cause is suspected to be metabolic in nature, related to the patient's overweight status."
