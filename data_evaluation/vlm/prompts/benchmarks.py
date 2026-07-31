@@ -143,6 +143,18 @@ from {-1, 0, 1, 2} using ONLY the rubric provided. Do not use any other scale or
 Respond with a single JSON object mapping each criterion name (exactly as given) to its integer \
 score, and nothing else. Example format: {"Criterion Name": 2}"""
 
+# For "thinking" models (e.g. Qwen3-VL-Thinking) whose extended <think>...</think>
+# reasoning traces can consume the entire token budget before ever reaching the
+# JSON answer. Appended to JUDGE_SYSTEM_PROMPT rather than replacing it, so the
+# grading instructions stay identical between thinking and non-thinking judges -
+# only the reasoning-budget instruction differs.
+MINIMIZE_THINKING_SUFFIX = """
+
+Keep any internal reasoning extremely brief - at most 4-5 short sentences noting \
+the key observation per criterion. Do not restate the rubric or the question/answer \
+text back in your reasoning. As soon as you have enough to decide, stop reasoning and \
+output the final JSON object immediately."""
+
 
 def build_benchmark_1_prompt(question: str, correct_answer: str) -> str:
     rubric = _format_rubric(BENCHMARK_1["criteria"])

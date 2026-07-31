@@ -10,11 +10,11 @@ import torch
 from PIL import Image
 from transformers import AutoModelForImageTextToText, AutoProcessor, BitsAndBytesConfig
 
-from prompts.benchmarks import JUDGE_SYSTEM_PROMPT, VALID_SCORES
+from prompts.benchmarks import JUDGE_SYSTEM_PROMPT, MINIMIZE_THINKING_SUFFIX, VALID_SCORES
 
 MODEL_IDS = {
     "internvl": "OpenGVLab/InternVL3_5-38B-HF",
-    "qwenvl": "Qwen/Qwen3-VL-32B-Thinking",
+    "qwenvl": "Qwen/Qwen3-VL-32B-Thinking"
 }
 
 _BNB_CONFIG = BitsAndBytesConfig(
@@ -44,6 +44,12 @@ class JudgeModel:
         # qwen_vl_testing.ipynb; InternVL's testing notebook uses a system role. We fold
         # the judge instructions into the user turn for both models for consistency.
         self.use_system_role = model_key == "internvl"
+        # "Thinking" models emit an extended <think>...</think> reasoning trace before
+        # the JSON answer, which can consume the whole token budget on its own. Append
+        # an explicit brevity instruction for these so the trace doesn't crowd out the
+        # answer; non-thinking models get the grading instructions unchanged.
+        self.is_thinking_model = "thinking" in self.model_id.lower()
+        self.system_prompt = JUDGE_SYSTEM_PROMPT + (MINIMIZE_THINKING_SUFFIX if self.is_thinking_model else "")
 
     def _build_messages(self, image: Image.Image, prompt_text: str) -> list:
         user_turn = {
@@ -54,12 +60,22 @@ class JudgeModel:
             ],
         }
         if self.use_system_role:
-            return [{"role": "system", "content": JUDGE_SYSTEM_PROMPT}, user_turn]
+            return [{"role": "system", "content": self.system_prompt}, user_turn]
         # Fold the system instructions into the text turn for models without a system role.
-        user_turn["content"][1]["text"] = f"{JUDGE_SYSTEM_PROMPT}\n\n{prompt_text}"
+        user_turn["content"][1]["text"] = f"{self.system_prompt}\n\n{prompt_text}"
         return [user_turn]
 
-    def generate(self, image: Image.Image, prompt_text: str, max_new_tokens: int = 512) -> str:
+    # If a call is truncated (ran out of max_new_tokens before finishing - e.g.
+    # Qwen3-VL-Thinking still inside <think>...</think>), the retry gets this much
+    # larger a budget instead of just trying again at the same size.
+    TRUNCATION_RETRY_TOKENS = 12288
+
+    def generate(self, image: Image.Image, prompt_text: str, max_new_tokens: int = 8192) -> tuple[str, bool]:
+        """Returns (output_text, was_truncated). was_truncated is True when
+        generation used the full max_new_tokens budget without emitting an EOS
+        token - i.e. the model was still mid-output (e.g. still inside a
+        <think> block) when generation was cut off, as opposed to naturally
+        finishing its response early."""
         messages = self._build_messages(image, prompt_text)
         text = self.processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         inputs = self.processor(text=[text], images=[image], padding=True, return_tensors="pt").to(
@@ -68,20 +84,50 @@ class JudgeModel:
         generated_ids = self.model.generate(
             **inputs, max_new_tokens=max_new_tokens, do_sample=False
         )
-        output_text = self.processor.batch_decode(
-            generated_ids[:, inputs.input_ids.shape[1]:], skip_special_tokens=True
-        )
-        return output_text[0]
+        new_tokens = generated_ids[:, inputs.input_ids.shape[1]:]
+        output_text = self.processor.batch_decode(new_tokens, skip_special_tokens=True)[0]
+
+        eos_token_ids = self.model.generation_config.eos_token_id
+        if eos_token_ids is None:
+            eos_token_ids = []
+        elif isinstance(eos_token_ids, int):
+            eos_token_ids = [eos_token_ids]
+        hit_eos = bool(set(new_tokens[0].tolist()) & set(eos_token_ids))
+        was_truncated = (new_tokens.shape[1] >= max_new_tokens) and not hit_eos
+        return output_text, was_truncated
 
     def score(self, image: Image.Image, prompt_text: str, criteria: list) -> dict:
-        """Runs generation and parses a {criterion: score} dict, retrying once on
-        malformed output. Any criterion that can't be parsed/validated is scored -1
-        (matches the paper's own use of -1 for 'unable to make the evaluation')."""
-        raw = self.generate(image, prompt_text)
+        """Runs generation and parses a {criterion: score} dict. Two distinct
+        failure modes get two distinct retries:
+        - Truncated generation (ran out of max_new_tokens before finishing):
+          retried once with TRUNCATION_RETRY_TOKENS, since the fix is "give it
+          more room," not "ask again and hope."
+        - Malformed/unparseable output despite finishing normally: retried once
+          at the same budget (a different sampling draw might format the JSON
+          correctly - though note do_sample=False makes this deterministic
+          unless the prompt itself is tweaked, so this mostly guards against
+          transient decode issues).
+        Any criterion still unparseable after both retries is scored -1 (matches
+        the paper's own use of -1 for 'unable to make the evaluation')."""
+        raw, truncated = self.generate(image, prompt_text)
         parsed = _parse_scores(raw, criteria)
-        if parsed is None:
-            raw = self.generate(image, prompt_text)
+
+        if parsed is None and truncated:
+            print(
+                f"[{self.model_key}] generation truncated at max_new_tokens before finishing "
+                f"(criteria={criteria}) - retrying with TRUNCATION_RETRY_TOKENS={self.TRUNCATION_RETRY_TOKENS}"
+            )
+            raw, truncated = self.generate(image, prompt_text, max_new_tokens=self.TRUNCATION_RETRY_TOKENS)
             parsed = _parse_scores(raw, criteria)
+            if parsed is None and truncated:
+                print(
+                    f"[{self.model_key}] still truncated even at {self.TRUNCATION_RETRY_TOKENS} tokens "
+                    f"(criteria={criteria}) - falling back to -1 for this call"
+                )
+        elif parsed is None:
+            raw, truncated = self.generate(image, prompt_text)
+            parsed = _parse_scores(raw, criteria)
+
         if parsed is None:
             parsed = {c: -1 for c in criteria}
         return parsed, raw

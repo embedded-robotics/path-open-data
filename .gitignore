@@ -10,9 +10,11 @@ vlm_data_archive/*
 data_evaluation/pathologists/subsets_processing_output/*
 data_evaluation/pathologists/scoring_analysis/input/*
 data_evaluation/pathologists/scoring_analysis/output/*
-data_eval_analysis_scripts/input/*
+data_evaluation/vlm/checkpoints/*
+data_evaluation/vlm/judge_output/*
 data_prep_scripts/output/*
 *.env
 box_config.json
 *.DS_Store
 *.out
+__pycache__/
