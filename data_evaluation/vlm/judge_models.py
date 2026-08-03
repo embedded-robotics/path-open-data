@@ -134,21 +134,38 @@ class JudgeModel:
 
 
 def _parse_scores(raw_text: str, criteria: list) -> dict | None:
-    match = re.search(r"\{.*\}", raw_text, re.DOTALL)
-    if not match:
-        return None
-    try:
-        obj = json.loads(match.group(0))
-    except json.JSONDecodeError:
-        return None
-    result = {}
-    for criterion in criteria:
-        value = obj.get(criterion)
+    """Finds the model's final answer JSON object among possibly several
+    {...}-shaped substrings in the response (a thinking model's reasoning trace
+    often mentions an intermediate/draft JSON before the real final answer, e.g.
+    "So the JSON would be {...}" followed later by the actual output). A single
+    greedy \\{.*\\} regex would span from the FIRST { to the LAST } and swallow
+    everything in between (including non-JSON text like a closing </think> tag),
+    producing an unparseable blob even though a valid final JSON exists.
+
+    Instead, this scans every non-nested {...} block (re.findall naturally
+    matches disjoint, non-overlapping spans) and tries them from LAST to FIRST,
+    returning the last one that both parses as JSON and contains valid scores
+    for every requested criterion - the model's true final answer is expected to
+    be the last such block in the text."""
+    candidates = re.findall(r"\{[^{}]*\}", raw_text, re.DOTALL)
+    for candidate in reversed(candidates):
         try:
-            value = int(value)
-        except (TypeError, ValueError):
-            return None
-        if value not in VALID_SCORES:
-            return None
-        result[criterion] = value
-    return result
+            obj = json.loads(candidate)
+        except json.JSONDecodeError:
+            continue
+        result = {}
+        valid = True
+        for criterion in criteria:
+            value = obj.get(criterion)
+            try:
+                value = int(value)
+            except (TypeError, ValueError):
+                valid = False
+                break
+            if value not in VALID_SCORES:
+                valid = False
+                break
+            result[criterion] = value
+        if valid:
+            return result
+    return None
