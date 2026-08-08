@@ -155,6 +155,36 @@ the key observation per criterion. Do not restate the rubric or the question/ans
 text back in your reasoning. As soon as you have enough to decide, stop reasoning and \
 output the final JSON object immediately."""
 
+# InternVL3.5's reasoning ("Thinking") mode is OFF by default and is only enabled by
+# supplying this R1-style system prompt - see the model card for InternVL3_5-38B-HF.
+# Appended to JUDGE_SYSTEM_PROMPT, not a replacement: the grading instructions must stay
+# byte-identical across judges so that a judge-vs-judge comparison isolates the model.
+#
+# Why this is worth the ~7x slower generation (measured ~36s vs ~5s per call): without it
+# InternVL emits a score in ~20 tokens with no analysis at all, and reflexively answers 2.
+# On PathOPEN Benchmark 1 that looks accurate only because 94.8% of human scores ARE 2 -
+# the same constant-rater trap the ceiling effect creates. On Benchmark 2 (wrong answers),
+# where human scores genuinely spread, thinking and non-thinking configs disagreed on
+# 5 of 10 criteria, with the non-thinking config giving the less discriminating score.
+#
+# NOTE: the model card recommends do_sample=True, temperature=0.6 alongside this prompt to
+# avoid repetition loops. We deliberately use greedy decoding instead. Measured on one
+# Benchmark 2 item, temperature 0.6 returned 0/0, 0/0, 1/1 across three identical runs,
+# while greedy returned 1/1 three times at an identical 310 tokens. Non-determinism would
+# break the checkpoint-resume contract (a resumed run must reproduce pre-crash scores) and
+# would contaminate judge-vs-judge kappa with self-disagreement. The repetition the
+# temperature guards against does not appear here - the judge's output is short and
+# structured, terminating cleanly in JSON at ~310 tokens.
+R1_SYSTEM_PROMPT = """
+
+You are an AI pathologist that rigorously follows this response protocol:
+
+1. First, conduct a detailed analysis of the question. Consider different angles, potential solutions, and reason through the problem step-by-step. Enclose this entire thinking process within <think> and </think> tags.
+
+2. After the thinking section, provide a clear, concise, and direct answer to the user's question. Separate the answer from the think section with a newline.
+
+Ensure that the thinking process is thorough but remains focused on the query. The final answer should be standalone and not reference the thinking section."""
+
 
 def build_benchmark_1_prompt(question: str, correct_answer: str) -> str:
     rubric = _format_rubric(BENCHMARK_1["criteria"])

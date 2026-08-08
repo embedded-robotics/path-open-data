@@ -2,6 +2,19 @@
 Shared VLM-as-judge model loading and inference helpers for InternVL3.5-38B and
 Qwen3-VL-32B-Thinking, following the same AutoModelForImageTextToText loading
 pattern already validated in intern_vl_testing.ipynb / qwen_vl_testing.ipynb.
+
+Per-model behaviour lives in JUDGE_SPECS rather than being inferred from the model id.
+The previous version guessed with `"thinking" in model_id.lower()`, which is silently
+wrong for InternVL3.5: its id contains no "thinking", so it would have been graded as a
+non-thinking judge with no reasoning prompt - despite reasoning mode being available and
+materially changing its scores (see R1_SYSTEM_PROMPT in prompts/benchmarks.py).
+
+Both judges now run unquantized at bf16. 4-bit NF4 was found to corrupt InternVL badly
+enough that it described a completely different image than the one supplied (histology
+slides read back as "Barbie logos", "a tweet screenshot", "lip gloss") - a vision-tower /
+projector failure, not the graceful quality loss quantization is usually assumed to cause.
+Running both judges at bf16 also keeps a judge-vs-judge comparison free of a quantization
+confound.
 """
 import json
 import re
@@ -10,13 +23,14 @@ import torch
 from PIL import Image
 from transformers import AutoModelForImageTextToText, AutoProcessor, BitsAndBytesConfig
 
-from prompts.benchmarks import JUDGE_SYSTEM_PROMPT, MINIMIZE_THINKING_SUFFIX, VALID_SCORES
+from prompts.benchmarks import (
+    JUDGE_SYSTEM_PROMPT,
+    MINIMIZE_THINKING_SUFFIX,
+    R1_SYSTEM_PROMPT,
+    VALID_SCORES,
+)
 
-MODEL_IDS = {
-    "internvl": "OpenGVLab/InternVL3_5-38B-HF",
-    "qwenvl": "Qwen/Qwen3-VL-32B-Thinking"
-}
-
+# Retained for reference / fallback only - NOT used. See the module docstring.
 _BNB_CONFIG = BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_quant_type="nf4",
@@ -24,32 +38,71 @@ _BNB_CONFIG = BitsAndBytesConfig(
     bnb_4bit_use_double_quant=True,
 )
 
+# Everything model-specific, stated explicitly:
+#   model_id            HuggingFace repo id
+#   use_system_role     True  -> judge instructions go in a dedicated system turn
+#                       False -> folded into the user turn (model has no system role)
+#   system_suffix       appended to JUDGE_SYSTEM_PROMPT; the grading instructions
+#                       themselves stay identical across judges
+#   images_in_template  True  -> processor.apply_chat_template(..., tokenize=True) does
+#                                tokenization AND image preprocessing in one call
+#                       False -> template the text, then call the processor with images
+#   load_in_4bit        kept per-model so a fallback is a one-line change
+JUDGE_SPECS = {
+    "internvl": {
+        "model_id": "OpenGVLab/InternVL3_5-38B-HF",
+        "use_system_role": True,       # InternVL has a real system role
+        "system_suffix": R1_SYSTEM_PROMPT,   # reasoning mode is off without this
+        "images_in_template": True,    # the model card's documented calling convention
+        "load_in_4bit": False,
+    },
+    "qwenvl": {
+        "model_id": "Qwen/Qwen3-VL-32B-Thinking",
+        "use_system_role": False,      # folded into the user turn, as originally validated
+        "system_suffix": MINIMIZE_THINKING_SUFFIX,  # already a thinking model; just cap the trace
+        "images_in_template": False,
+        "load_in_4bit": False,
+    },
+}
+
+# Backwards compatibility: several notebooks still read MODEL_IDS.
+MODEL_IDS = {key: spec["model_id"] for key, spec in JUDGE_SPECS.items()}
+
 
 class JudgeModel:
     """Wraps a single VLM judge (InternVL or Qwen-VL) behind a uniform score() call."""
 
-    def __init__(self, model_key: str, device_map: str = "auto"):
-        if model_key not in MODEL_IDS:
-            raise ValueError(f"Unknown model_key {model_key!r}; expected one of {list(MODEL_IDS)}")
+    def __init__(self, model_key: str, device_map: str = "auto", max_memory: dict | None = None):
+        """`max_memory` (e.g. {0: "42GiB", 1: "42GiB", 2: "42GiB"}) is passed straight to
+        Accelerate. Worth setting: at bf16 these models are sharded across several cards,
+        and device_map="auto" alone tends to pack the first card tightly enough to OOM
+        mid-generation - hours into a run, on the long-reasoning retry path."""
+        if model_key not in JUDGE_SPECS:
+            raise ValueError(f"Unknown model_key {model_key!r}; expected one of {list(JUDGE_SPECS)}")
         self.model_key = model_key
-        self.model_id = MODEL_IDS[model_key]
-        self.model = AutoModelForImageTextToText.from_pretrained(
-            self.model_id,
-            quantization_config=_BNB_CONFIG,
-            device_map=device_map,
-            torch_dtype=torch.bfloat16,
-        )
+        self.spec = JUDGE_SPECS[model_key]
+        self.model_id = self.spec["model_id"]
+
+        load_kwargs = {
+            "dtype": torch.bfloat16,   # `torch_dtype` is deprecated in transformers 5.x
+            "device_map": device_map,
+        }
+        if max_memory is not None:
+            load_kwargs["max_memory"] = max_memory
+        if self.spec["load_in_4bit"]:
+            load_kwargs["quantization_config"] = _BNB_CONFIG
+
+        self.model = AutoModelForImageTextToText.from_pretrained(self.model_id, **load_kwargs)
+        self.model.eval()
         self.processor = AutoProcessor.from_pretrained(self.model_id)
-        # Qwen3-VL-Thinking has no dedicated system-prompt convention in the existing
-        # qwen_vl_testing.ipynb; InternVL's testing notebook uses a system role. We fold
-        # the judge instructions into the user turn for both models for consistency.
-        self.use_system_role = model_key == "internvl"
-        # "Thinking" models emit an extended <think>...</think> reasoning trace before
-        # the JSON answer, which can consume the whole token budget on its own. Append
-        # an explicit brevity instruction for these so the trace doesn't crowd out the
-        # answer; non-thinking models get the grading instructions unchanged.
-        self.is_thinking_model = "thinking" in self.model_id.lower()
-        self.system_prompt = JUDGE_SYSTEM_PROMPT + (MINIMIZE_THINKING_SUFFIX if self.is_thinking_model else "")
+
+        self.use_system_role = self.spec["use_system_role"]
+        self.images_in_template = self.spec["images_in_template"]
+        self.system_prompt = JUDGE_SYSTEM_PROMPT + self.spec["system_suffix"]
+
+        # A sharded model has no single `.device`; inputs must land on whichever device
+        # holds the first layer, and Accelerate's hooks move activations onward from there.
+        self.input_device = self.model.get_input_embeddings().weight.device
 
     def _build_messages(self, image: Image.Image, prompt_text: str) -> list:
         user_turn = {
@@ -65,6 +118,12 @@ class JudgeModel:
         user_turn["content"][1]["text"] = f"{self.system_prompt}\n\n{prompt_text}"
         return [user_turn]
 
+    def _eos_token_ids(self) -> list:
+        eos = self.model.generation_config.eos_token_id
+        if eos is None:
+            return []
+        return [eos] if isinstance(eos, int) else list(eos)
+
     # If a call is truncated (ran out of max_new_tokens before finishing - e.g.
     # Qwen3-VL-Thinking still inside <think>...</think>), the retry gets this much
     # larger a budget instead of just trying again at the same size.
@@ -77,22 +136,37 @@ class JudgeModel:
         <think> block) when generation was cut off, as opposed to naturally
         finishing its response early."""
         messages = self._build_messages(image, prompt_text)
-        text = self.processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-        inputs = self.processor(text=[text], images=[image], padding=True, return_tensors="pt").to(
-            self.model.device
-        )
-        generated_ids = self.model.generate(
-            **inputs, max_new_tokens=max_new_tokens, do_sample=False
-        )
-        new_tokens = generated_ids[:, inputs.input_ids.shape[1]:]
+        if self.images_in_template:
+            # One call does templating, tokenization and image preprocessing - the
+            # convention documented on the InternVL3.5 model card.
+            inputs = self.processor.apply_chat_template(
+                messages,
+                add_generation_prompt=True,
+                tokenize=True,
+                return_dict=True,
+                return_tensors="pt",
+            ).to(self.input_device)
+        else:
+            text = self.processor.apply_chat_template(
+                messages, tokenize=False, add_generation_prompt=True
+            )
+            inputs = self.processor(
+                text=[text], images=[image], padding=True, return_tensors="pt"
+            ).to(self.input_device)
+
+        # Greedy, always. Reproducibility is a hard requirement here: the checkpoint is
+        # the source of truth and a resumed run must reproduce pre-crash scores, and
+        # judge-vs-judge agreement must not be contaminated by a judge disagreeing with
+        # itself. See R1_SYSTEM_PROMPT in prompts/benchmarks.py for the measurements.
+        with torch.inference_mode():
+            generated_ids = self.model.generate(
+                **inputs, max_new_tokens=max_new_tokens, do_sample=False
+            )
+        prompt_len = inputs["input_ids"].shape[1]
+        new_tokens = generated_ids[:, prompt_len:]
         output_text = self.processor.batch_decode(new_tokens, skip_special_tokens=True)[0]
 
-        eos_token_ids = self.model.generation_config.eos_token_id
-        if eos_token_ids is None:
-            eos_token_ids = []
-        elif isinstance(eos_token_ids, int):
-            eos_token_ids = [eos_token_ids]
-        hit_eos = bool(set(new_tokens[0].tolist()) & set(eos_token_ids))
+        hit_eos = bool(set(new_tokens[0].tolist()) & set(self._eos_token_ids()))
         was_truncated = (new_tokens.shape[1] >= max_new_tokens) and not hit_eos
         return output_text, was_truncated
 
