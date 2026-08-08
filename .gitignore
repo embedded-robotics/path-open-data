@@ -20,3 +20,4 @@ box_config.json
 *.out
 *.log
 __pycache__/
+data_evaluation/vlm/logs/
