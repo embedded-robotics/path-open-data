@@ -36,8 +36,8 @@ import os
 
 # Physical GPU ids per judge, chosen to keep each model inside one NUMA island.
 JUDGE_GPUS = {
-    "qwenvl": [0, 1, 2],     # island A
-    "internvl": [4, 5, 6],   # island B
+    "qwenvl": [4, 5, 6],     # island A
+    "internvl": [0, 1, 2],   # island B
 }
 
 # Per-card ceiling handed to Accelerate. Cards are 47.4 GiB; 42 GiB leaves ~5 GiB for

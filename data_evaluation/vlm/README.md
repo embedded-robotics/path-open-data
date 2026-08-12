@@ -63,7 +63,7 @@ treated as an explicit limitation.
 
 Every notebook that calls a judge model (`judge_runner_pathopen.ipynb`,
 `judge_runner_pathvqa.ipynb`, `benchmark5_mcq_standalone.ipynb`,
-`quiltvqa_benchmark1.ipynb`) follows the same pattern, built around
+`quiltvqa_eval_runner.ipynb`) follows the same pattern, built around
 `checkpoint.py`'s `JudgeCheckpoint` class:
 
 1. **Every individual judge call is written to disk immediately** as one JSON
@@ -231,17 +231,34 @@ items are skipped and counted per run, not silently dropped.
 This is a **large inference job** by design (per explicit user choice): every
 resolvable item across all three datasets, not a sample.
 
-### `quiltvqa_benchmark1.ipynb`
-Pillar 1b. Scores Quilt-VQA's (`wisdomik/Quilt_VQA`, cached locally) 724
-`OPEN`-type rows (out of 985 total — the 261 `CLOSED` rows are out of the
-paper's stated Sub-pillar 1b scope and are left unscored here) against
-Benchmark 1. Then reproduces the paper's Figure 3 Panel B (PathOPEN vs.
-Quilt-VQA, judge-rated Benchmark 1 scores, Mann-Whitney U/rank-biserial) using
-each judge's own PathOPEN scores from `judge_runner_pathopen.ipynb`'s output.
-This notebook does **not** re-derive judge credibility on its own — it assumes
-`judge_pathologist_agreement.ipynb` has already established the Benchmark 1
-weighted kappa, and its final markdown cell reminds you to report both together
-(Figure 3 Panel A + Panel B), per the paper's own structure.
+### `quiltvqa_eval_runner.ipynb`
+Pillar 1b. Scores Quilt-VQA (`wisdomik/Quilt_VQA`, cached locally) on **both**
+benchmarks, splitting by `answer_type`: the 724 `OPEN` rows against Benchmark 1,
+and 257 of the 261 `CLOSED` rows against Benchmark 3.
+
+The paper's stated Sub-pillar 1b scope is "open-ended pairs" only, and Table 3
+marks Quilt-VQA as CE ✗ — but Quilt-VQA does have close-ended questions; their
+answers just store the yes/no verdict with an explanation attached ("Yes,
+hyperchromasia and enlargement are visible in the image."). 257/261 (98.5%)
+begin with a recoverable `yes`/`no`, and 0/724 `OPEN` answers do, so the split
+is clean. Stripping the verdict yields a genuine close-ended item, giving a
+like-for-like Benchmark 3 comparison against PathOPEN CE and filtered-PathVQA CE
+(both bare yes/no). The 4 rows with no recoverable verdict are excluded and
+reported, not silently dropped.
+
+Then reproduces the paper's Figure 3 Panel B (PathOPEN vs. Quilt-VQA,
+Mann-Whitney U/rank-biserial) using each judge's own PathOPEN scores from the
+PathOPEN runner's output, comparing each stratum against the PathOPEN column
+scored on the *same* benchmark. This notebook does **not** re-derive judge
+credibility on its own — it assumes `judge_pathologist_agreement.ipynb` has
+already established the weighted kappa, and its final markdown cell reminds you
+to report both together (Figure 3 Panel A + Panel B), per the paper's structure.
+
+Outputs follow the same layout as the PathOPEN and PathVQA runners:
+`judge_output/evaluator_{model_key}/quiltvqa_eval_data.csv` (per-row scores, both
+strata), with the cross-dataset comparison in
+`agreement_output/pathopen_vs_quiltvqa_eval_mannwhitney.csv` next to
+`pathopen_vs_pathvqa_mannwhitney.csv`.
 
 ## Run order
 
@@ -250,7 +267,7 @@ weighted kappa, and its final markdown cell reminds you to report both together
 3. `judge_pathologist_agreement.ipynb` (needs 1 & 2's output)
 4. `wrong_answer_tier_agreement.ipynb` (needs 1's output)
 5. `benchmark5_mcq_standalone.ipynb` (independent of 1–4, but large — expect a long run)
-6. `quiltvqa_benchmark1.ipynb` (needs 1's output for the Mann-Whitney comparison; conceptually depends on 3 having already been reviewed)
+6. `quiltvqa_eval_runner.ipynb` (needs 1's output for the Mann-Whitney comparison; conceptually depends on 3 having already been reviewed)
 
 `MODELS_TO_RUN` at the top of each runner notebook controls which judge(s) to
 use for that pass (`["internvl", "qwenvl"]` by default — both fit comfortably
