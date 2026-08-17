@@ -4,6 +4,7 @@ pathvqa_data_filtered/*
 data_augmentation/pathology-he-autoaugmetation/*
 data_augmentation/pathology-he-auto-augment/*
 data_augmentation/images_augmented/*
+data_augmentation/augmentation_balance_output/*
 data_processing/histocartography/*
 data_analysis/output/*
 vlm_data_archive/*

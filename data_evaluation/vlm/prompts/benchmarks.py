@@ -148,12 +148,44 @@ score, and nothing else. Example format: {"Criterion Name": 2}"""
 # JSON answer. Appended to JUDGE_SYSTEM_PROMPT rather than replacing it, so the
 # grading instructions stay identical between thinking and non-thinking judges -
 # only the reasoning-budget instruction differs.
+#
+# REWRITTEN after the Benchmark 5 run, where the first version was not enough. Measured
+# on PathOPEN Benchmark 5: Qwen ran at 497 s/call vs InternVL's 58 s/call (8.5x slower),
+# with 11/139 calls producing NO parseable JSON at all after exhausting 8192 + 12288
+# tokens. Inspecting those traces showed the problem is not verbosity, it is INDECISION -
+# the model oscillates between adjacent rubric levels and never commits:
+#
+#   "the correct score would be 0? No. ... would be 1? No. ... This is confusing.
+#    Maybe the correct score is 0? No. Let's look at the image again."
+#
+# Across the 11 runaway traces: "So the" x1295, "But the" x798, "However" x445.
+#
+# The original suffix only capped LENGTH ("keep reasoning brief"), which does not help a
+# model stuck in a decision loop - it just loops more tersely. This version adds an
+# explicit tie-breaking rule so an uncertain call has a defined exit, forbids the
+# revisiting behaviour by name, and states the failure cost. Benchmark 5 is the hardest
+# case for this because it scores an option with NO question stem (deliberately, per
+# Sub-pillar 3a), and the missing context is exactly what Qwen speculates about.
 MINIMIZE_THINKING_SUFFIX = """
 
-Keep any internal reasoning extremely brief - at most 4-5 short sentences noting \
-the key observation per criterion. Do not restate the rubric or the question/answer \
-text back in your reasoning. As soon as you have enough to decide, stop reasoning and \
-output the final JSON object immediately."""
+REASONING BUDGET - this is a hard constraint, not a suggestion:
+
+1. Think for at most 4-5 short sentences total, noting the single key observation per \
+criterion. Do not restate the rubric, the question, or the answer text back to yourself.
+2. Decide each criterion ONCE. Do not revisit, second-guess, or re-derive a score you \
+have already reasoned about. Do not enumerate the rubric levels one by one asking \
+whether each fits.
+3. If you are torn between two adjacent scores, immediately pick the LOWER one and move \
+on. "Torn between two scores" is itself a decision - it is never a reason to keep \
+reasoning.
+4. If the option or image is genuinely uninterpretable, output -1 for that criterion \
+straight away. That is a valid rubric score, not a failure - reaching for it early is \
+correct behaviour, not something to avoid.
+5. Emit the final JSON object as soon as you have one score per criterion. A response \
+that never reaches the JSON is scored as a total failure for this item, which is far \
+worse than a confidently-chosen imperfect score.
+
+Your entire response, reasoning included, must stay well under 4000 tokens."""
 
 # InternVL3.5's reasoning ("Thinking") mode is OFF by default and is only enabled by
 # supplying this R1-style system prompt - see the model card for InternVL3_5-38B-HF.

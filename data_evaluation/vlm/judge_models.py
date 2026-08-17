@@ -47,6 +47,9 @@ _BNB_CONFIG = BitsAndBytesConfig(
 #   images_in_template  True  -> processor.apply_chat_template(..., tokenize=True) does
 #                                tokenization AND image preprocessing in one call
 #                       False -> template the text, then call the processor with images
+#   trailing_reminder   appended AFTER the per-item prompt (empty string = nothing).
+#                       Only used when use_system_role is False, where the instructions
+#                       would otherwise sit far from the generation point.
 #   load_in_4bit        kept per-model so a fallback is a one-line change
 JUDGE_SPECS = {
     "internvl": {
@@ -54,6 +57,10 @@ JUDGE_SPECS = {
         "use_system_role": True,       # InternVL has a real system role
         "system_suffix": R1_SYSTEM_PROMPT,   # reasoning mode is off without this
         "images_in_template": True,    # the model card's documented calling convention
+        # InternVL needs no reminder: measured 0 unparseable calls in 1145 on Benchmark 5,
+        # median ~325 output tokens. Adding one would also alter its prompt and break
+        # comparability with the InternVL scores already checkpointed.
+        "trailing_reminder": "",
         "load_in_4bit": False,
     },
     "qwenvl": {
@@ -61,6 +68,11 @@ JUDGE_SPECS = {
         "use_system_role": False,      # folded into the user turn, as originally validated
         "system_suffix": MINIMIZE_THINKING_SUFFIX,  # already a thinking model; just cap the trace
         "images_in_template": False,
+        "trailing_reminder": (
+            "\n\nReminder: decide each criterion once, pick the lower score if torn, "
+            "and output the JSON object now. Do not re-examine scores you have already "
+            "reasoned about."
+        ),
         "load_in_4bit": False,
     },
 }
@@ -99,6 +111,7 @@ class JudgeModel:
         self.use_system_role = self.spec["use_system_role"]
         self.images_in_template = self.spec["images_in_template"]
         self.system_prompt = JUDGE_SYSTEM_PROMPT + self.spec["system_suffix"]
+        self.trailing_reminder = self.spec.get("trailing_reminder", "")
 
         # A sharded model has no single `.device`; inputs must land on whichever device
         # holds the first layer, and Accelerate's hooks move activations onward from there.
@@ -115,7 +128,16 @@ class JudgeModel:
         if self.use_system_role:
             return [{"role": "system", "content": self.system_prompt}, user_turn]
         # Fold the system instructions into the text turn for models without a system role.
-        user_turn["content"][1]["text"] = f"{self.system_prompt}\n\n{prompt_text}"
+        #
+        # The reasoning-budget rule is also repeated AFTER the rubric and option text.
+        # Without a system role the whole preamble sits ~2000 tokens before the point
+        # where generation starts, which is the weakest position for an instruction the
+        # model has to obey while decoding. Restating it last costs ~30 tokens and puts
+        # it where recency helps most - this matters for Qwen on Benchmark 5, where the
+        # trace otherwise runs past the entire budget without emitting JSON.
+        user_turn["content"][1]["text"] = (
+            f"{self.system_prompt}\n\n{prompt_text}{self.trailing_reminder}"
+        )
         return [user_turn]
 
     def _eos_token_ids(self) -> list:

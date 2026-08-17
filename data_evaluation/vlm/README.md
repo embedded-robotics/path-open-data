@@ -55,14 +55,14 @@ All scores are on the ordinal scale **{-1, 0, 1, 2}**, where `-1` always means
 **Benchmark 5 was never scored by human pathologists at all.** The paper states
 this explicitly (§3.5.4): it was designed from the start to be judged by an
 LLM/VLM, validated only informally against a held-out PathOPEN subset. There is
-no human baseline to compare it to in this codebase; `benchmark5_mcq_standalone.ipynb`
+no human baseline to compare it to in this codebase; `mcq_option_validity_runner.ipynb`
 reports judge-vs-judge agreement as the only reliability signal, and this is
 treated as an explicit limitation.
 
 ## Checkpointing: running the model vs. post-processing are separate steps
 
 Every notebook that calls a judge model (`judge_runner_pathopen.ipynb`,
-`judge_runner_pathvqa.ipynb`, `benchmark5_mcq_standalone.ipynb`,
+`judge_runner_pathvqa.ipynb`, `mcq_option_validity_runner.ipynb`,
 `quiltvqa_eval_runner.ipynb`) follows the same pattern, built around
 `checkpoint.py`'s `JudgeCheckpoint` class:
 
@@ -94,7 +94,7 @@ mid-row only loses the one in-flight call, not the rest of that row's
 progress — the assembly step reconstructs each row by joining all of that
 row's checkpointed sub-task records back together.
 
-**`benchmark5_mcq_standalone.ipynb`-specific detail**: this is the largest
+**`mcq_option_validity_runner.ipynb`-specific detail**: this is the largest
 inference job in the pipeline (thousands of MCQ options across three
 datasets), so it additionally does a cheap "is this whole item already fully
 done?" check before even loading an image — if every sub-task for an item is
@@ -203,7 +203,7 @@ paper's own stated reviewer concern. Also documents (but does not implement) the
 paper's *optional* Figure 4 Panel C — a monotonic-difficulty-gradient behavioral
 test — since that requires VLM-as-answerer benchmarking, out of scope here.
 
-### `benchmark5_mcq_standalone.ipynb`
+### `mcq_option_validity_runner.ipynb`
 Pillar 3 / Benchmark 5. Scores every resolvable MCQ option **standalone** (no
 question stem) across three datasets:
 
@@ -266,7 +266,7 @@ strata), with the cross-dataset comparison in
 2. `judge_runner_pathvqa.ipynb`
 3. `judge_pathologist_agreement.ipynb` (needs 1 & 2's output)
 4. `wrong_answer_tier_agreement.ipynb` (needs 1's output)
-5. `benchmark5_mcq_standalone.ipynb` (independent of 1–4, but large — expect a long run)
+5. `mcq_option_validity_runner.ipynb` (independent of 1–4, but large — expect a long run)
 6. `quiltvqa_eval_runner.ipynb` (needs 1's output for the Mann-Whitney comparison; conceptually depends on 3 having already been reviewed)
 
 `MODELS_TO_RUN` at the top of each runner notebook controls which judge(s) to
