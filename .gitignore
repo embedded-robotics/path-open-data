@@ -15,7 +15,9 @@ data_evaluation/vlm/checkpoints/*
 data_evaluation/vlm/judge_output/*
 data_evaluation/vlm/agreement_output/*
 data_evaluation/vlm_zeroshot/checkpoints/*
+data_evaluation/vlm_zeroshot/analysis/*
 data_evaluation/vlm_zeroshot/logs/*
+data_graphics/figures/*
 data_prep_scripts/output/*
 *.env
 box_config.json

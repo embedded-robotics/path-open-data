@@ -11,7 +11,10 @@ different question, which is why all three are reported rather than one blended 
                   short answers and blind to synonyms ("neoplasm" vs "tumour").
     BERTScore     embedding similarity. Credits paraphrase, which matters here because a
                   pathologist's answer and a model's can be clinically identical and
-                  lexically disjoint.
+                  lexically disjoint. Reported BOTH raw and baseline-rescaled: raw is what
+                  the literature quotes, but its floor is ~85 for any fluent same-domain
+                  text, so differences look artificially small. Rescaled subtracts that
+                  floor, giving a scale where 0 = no better than unrelated text.
 
 ## Two things the paper's own reviewer-concerns section demands
 
@@ -105,7 +108,8 @@ def sentence_bleu(prediction: str, reference: str) -> float:
 def score_open_ended_corpus(predictions: list, references: list,
                             compute_bertscore: bool = True,
                             bertscore_model: str = "roberta-large",
-                            device: str = "cuda:0", batch_size: int = 64) -> dict:
+                            device: str = "cuda:0", batch_size: int = 64,
+                            rescale_bertscore: bool = True) -> dict:
     """Corpus-level metrics over aligned prediction/reference lists.
 
     BLEU is computed at CORPUS level, not averaged over sentences: BLEU's brevity penalty
@@ -131,10 +135,27 @@ def score_open_ended_corpus(predictions: list, references: list,
 
     if compute_bertscore:
         from bert_score import score as bert_score_fn
-        _, _, f1 = bert_score_fn(predictions, references, model_type=bertscore_model,
-                                 lang="en", device=device, batch_size=batch_size,
-                                 verbose=False, rescale_with_baseline=False)
-        result["bertscore_f1"] = round(100 * float(f1.mean()), 2)
+        # RAW: comparable with published BERTScore figures, which almost always report
+        # the unrescaled number. But it has a high, uninformative floor - any two fluent
+        # English sentences on the same topic score ~85, so a 85-vs-88 spread looks tiny
+        # when the underlying difference is not.
+        _, _, raw_f1 = bert_score_fn(predictions, references, model_type=bertscore_model,
+                                     lang="en", device=device, batch_size=batch_size,
+                                     verbose=False, rescale_with_baseline=False)
+        result["bertscore_f1"] = round(100 * float(raw_f1.mean()), 2)
+
+        if rescale_bertscore:
+            # RESCALED: bert-score subtracts an empirical baseline computed on random
+            # sentence pairings, so 0 means "no better than unrelated text" and 1 means
+            # "identical". That is the scale a reader intuitively assumes, and it is what
+            # makes a figure legible - the raw 85-88 band expands into a real spread.
+            # Both are reported because they answer different questions; neither alone
+            # is honest here.
+            _, _, rescaled_f1 = bert_score_fn(
+                predictions, references, model_type=bertscore_model, lang="en",
+                device=device, batch_size=batch_size, verbose=False,
+                rescale_with_baseline=True)
+            result["bertscore_f1_rescaled"] = round(100 * float(rescaled_f1.mean()), 2)
     return result
 
 
