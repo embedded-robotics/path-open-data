@@ -162,7 +162,10 @@ def save(fig, name: str, formats=("svg", "pdf")) -> list:
     paths = []
     for extension in formats:
         path = os.path.join(FIGURE_DIR, f"{name}.{extension}")
-        fig.savefig(path, format=extension)
+        # A small uniform border. Without it the tight bounding box is flush against the
+        # outermost tick label or legend, and panels in the right-hand column read as
+        # pressed against the page edge. 0.06 in ~= 1.5 mm ~= 13 px at this dpi.
+        fig.savefig(path, format=extension, bbox_inches="tight", pad_inches=0.06)
         paths.append(path)
     return paths
 
@@ -206,10 +209,13 @@ def lift_legend_above_titles(fig, legend, axes, gap_pt: float = 3.0) -> None:
     against the other by hand does not survive a change in figure size. This measures both
     after a draw and moves the legend by the shortfall, which does.
     """
+    titled = [ax for ax in axes if ax.title.get_text()]
+    if not titled:
+        return
     fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
     legend_box = legend.get_window_extent(renderer)
-    highest = max(ax.title.get_window_extent(renderer).y1 for ax in axes)
+    highest = max(ax.title.get_window_extent(renderer).y1 for ax in titled)
     shortfall = highest + gap_pt * fig.dpi / 72.0 - legend_box.y0
     if shortfall <= 0:
         return
