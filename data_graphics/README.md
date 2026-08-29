@@ -23,7 +23,7 @@ The repo's top-level directories are pipeline stages - `data_processing`,
 
 More concretely, the figures span data sources: Pillar 5 draws from
 `data_augmentation/augmentation_balance_output/`, Pillars 1-3 from
-`data_evaluation/vlm/agreement_output/`, and Pillar 4 from
+`data_evaluation/vlm_judge/agreement_output/`, and Pillar 4 from
 `data_evaluation/vlm_zeroshot/analysis/`. Nesting the figure code under any one of those
 would misfile the others.
 

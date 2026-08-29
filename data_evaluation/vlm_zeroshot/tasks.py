@@ -46,7 +46,7 @@ PATCHVQA_IMAGES_DIR = PATHMMU_IMAGES_DIR
 QUILTVQA_IMAGES_DIR = "/data/mn27889/pathology-datasets/Quilt_VQA/images"
 
 # PathMMU publishes test_tiny as a curated representative subset; using it keeps this
-# consistent with the Benchmark 5 scoping in ../vlm/mcq_option_validity_runner.ipynb.
+# consistent with the Benchmark 5 scoping in ../vlm_judge/mcq_option_validity_runner.ipynb.
 DEFAULT_SPLITS = ("test_tiny",)
 # PathCLS is byte-identical between PathMMU and PatchVQA (verified: same img, question,
 # options and answer for all 177 test_tiny items). Scored once, under PathMMU.
@@ -361,7 +361,7 @@ def load_quiltvqa_open_ended(cache_dir: str | None = None) -> list:
     CLOSED answers here are a yes/no verdict followed by an explanation ("Yes,
     hyperchromasia and enlargement are visible..."). The verdict is split off so the
     close-ended metric compares yes/no against yes/no, matching how
-    ../vlm/quiltvqa_eval_runner.ipynb treats the same rows.
+    ../vlm_judge/quiltvqa_eval_runner.ipynb treats the same rows.
 
     **Runs without `datasets` once extracted.** The `path-llava` environment (torch 2.0.1
     / transformers 4.36.2) has no `datasets` package, and installing one risks the same

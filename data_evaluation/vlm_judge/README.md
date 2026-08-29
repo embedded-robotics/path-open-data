@@ -275,7 +275,7 @@ given the 8×A6000 GPUs available; there's no need to run them sequentially to
 save memory unless you want to).
 
 Each notebook writes its own `checkpoints/` and output directory relative to
-its **working directory at kernel start** (i.e. `data_evaluation/vlm/`, assuming
+its **working directory at kernel start** (i.e. `data_evaluation/vlm_judge/`, assuming
 you launch Jupyter from there as usual) — they don't share a checkpoint
 namespace with each other, so re-running one notebook never touches another's
 saved progress.
@@ -303,7 +303,7 @@ not have been obvious from reading the code alone:
   a shared name that only existed in the human CSV).
 - `REPO_ROOT` was resolved one directory level too high in all three
   originally-drafted notebooks (`"..","..",".."` instead of `"..",".."`
-  from `data_evaluation/vlm/`).
+  from `data_evaluation/vlm_judge/`).
 - An f-string syntax error (escaped quote inside a `{...}` expression).
 
 If you extend or modify any notebook here, re-running it against a stub judge

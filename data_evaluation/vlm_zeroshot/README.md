@@ -1,10 +1,10 @@
 # VLM-as-Answerer (Pillars 3b and 4)
 
 Runs candidate VLMs **as answerers** — the model attempts each question and is scored on
-whether it got the answer right. This is a different pipeline from `../vlm/`, where a
+whether it got the answer right. This is a different pipeline from `../vlm_judge/`, where a
 large VLM acts as a **judge** grading text that already exists.
 
-| | `../vlm/` (judge) | this folder (answerer) |
+| | `../vlm_judge/` (judge) | this folder (answerer) |
 |---|---|---|
 | model's job | grade an existing answer against a rubric | produce an answer |
 | output | ordinal score {-1,0,1,2} | predicted option / free text |
@@ -59,7 +59,7 @@ cross-model comparison is the entire point of 4a.
 - **LLaVA-family models need a different loading path.** `LlavaMistralForCausalLM` and
   `LlavaLlamaForCausalLM` do not load through `AutoModelForImageTextToText` the way the
   judges do. Each gets its own smoke-test notebook before being wired in, the same way
-  InternVL was validated in `../vlm/intern_vl_testing.ipynb`.
+  InternVL was validated in `../vlm_judge/intern_vl_testing.ipynb`.
 
 ## Layout
 
@@ -74,7 +74,7 @@ vlm_zeroshot/
   analysis/                 cross-model tables and figures
 ```
 
-Checkpointing follows `../vlm/checkpoint.py` exactly: every model call is appended to
+Checkpointing follows `../vlm_judge/checkpoint.py` exactly: every model call is appended to
 `checkpoints/{model_key}_{task}.jsonl` with an `fsync`, keyed by a stable `item_id`, so
 a run is always resumable and re-running only scores what is missing. That pattern has
 already survived several multi-day interruptions in the judge pipeline.
@@ -96,7 +96,7 @@ started with the right Python regardless of what is active in your shell - verif
 running `--dry-run` from both envs and diffing the output.
 
 `path-opendata-vlms` is still the one to prefer, simply because everything else in this
-repo (the analysis notebooks, the judge pipeline in `../vlm/`) needs it.
+repo (the analysis notebooks, the judge pipeline in `../vlm_judge/`) needs it.
 
 A single model can also be run directly, which is the easiest way to debug one in
 isolation - but then the interpreter DOES matter:
@@ -109,13 +109,13 @@ isolation - but then the interpreter DOES matter:
 ```
 
 Scope: **6 models x 1,428 tasks x 5 conditions = 42,840 calls**, two models per GPU on
-cards 3-5, roughly 2-4 hours. GPUs 0-2 are left alone for the judge run in `../vlm/`.
+cards 3-5, roughly 2-4 hours. GPUs 0-2 are left alone for the judge run in `../vlm_judge/`.
 Every call is checkpointed, so a kill and restart costs only the in-flight item.
 
 ## Status
 
 Scaffolding in progress. Nothing has been run yet.
 
-Note that `../vlm/` will be renamed to `../vlm_judge/` once the Qwen Benchmark 5 run
+Note that `../vlm_judge/` will be renamed to `../vlm_judge/` once the Qwen Benchmark 5 run
 finishes — its checkpoint paths are absolute and resolved at process start, so renaming
 the directory while it runs would silently orphan ~9 days of GPU time.

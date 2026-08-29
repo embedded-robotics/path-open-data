@@ -92,7 +92,7 @@ def main() -> int:
     model_key = args.model
     gpu = args.gpu if args.gpu is not None else gpu_allocation.gpu_for(model_key)
     if gpu in gpu_allocation.RESERVED_GPUS and args.gpu is None:
-        print(f"refusing GPU {gpu} - reserved for the judge run in ../vlm/", file=sys.stderr)
+        print(f"refusing GPU {gpu} - reserved for the judge run in ../vlm_judge/", file=sys.stderr)
         return 2
     # Must precede every torch-touching import; see run_answerer.py for why.
     os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu)

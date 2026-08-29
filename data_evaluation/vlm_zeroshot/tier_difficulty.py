@@ -62,7 +62,7 @@ def load_tier_lookup() -> dict:
 
     Uses the Error Proximity criterion (Benchmark 2's first), which is the one the paper's
     tier definition names. Items the pathologist scored -1 have no tier and are skipped,
-    per the same binning `../vlm/wrong_answer_tier_agreement.ipynb` uses."""
+    per the same binning `../vlm_judge/wrong_answer_tier_agreement.ipynb` uses."""
     import pandas as pd
 
     source_parts = sorted(glob.glob(os.path.join(SUBSETS_DIR, "pathopen_vqa_part*.csv")))

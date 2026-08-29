@@ -60,7 +60,7 @@ def main() -> int:
     # that could pull in torch is deferred until after this line.
     gpu = args.gpu if args.gpu is not None else gpu_allocation.gpu_for(model_key)
     if gpu in gpu_allocation.RESERVED_GPUS and args.gpu is None:
-        print(f"refusing to use GPU {gpu} - reserved for the judge run in ../vlm/",
+        print(f"refusing to use GPU {gpu} - reserved for the judge run in ../vlm_judge/",
               file=sys.stderr)
         return 2
     # CUDA_VISIBLE_DEVICES RENUMBERS devices: exposing only physical GPU 4 makes torch
@@ -72,7 +72,7 @@ def main() -> int:
     # allocation to cuda:0 appeared on physical 4, 6 and 7 respectively (matched by GPU
     # UUID against nvidia-smi).
     #
-    # This is deliberately the opposite of ../vlm/gpu_allocation.py, where each 32B/38B
+    # This is deliberately the opposite of ../vlm_judge/gpu_allocation.py, where each 32B/38B
     # judge is SHARDED over three cards and needs a max_memory dict keyed by logical ids.
     # Here every model is self-contained on one card, so one visible device is simpler and
     # safer.

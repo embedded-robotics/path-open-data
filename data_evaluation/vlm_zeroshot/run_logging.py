@@ -1,6 +1,6 @@
 """Per-run log files for answerer runs.
 
-Mirrors what `../vlm/parallel_judges.py` does for the judges, for the same reason: a run
+Mirrors what `../vlm_judge/parallel_judges.py` does for the judges, for the same reason: a run
 prints one line per item, and with several models on different GPUs a shared console
 interleaves them into something unreadable. Per-run files also survive a closed notebook,
 which matters when a run is measured in hours.

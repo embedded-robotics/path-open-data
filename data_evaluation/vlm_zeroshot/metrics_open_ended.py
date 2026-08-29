@@ -81,7 +81,7 @@ def extract_yes_no(text: str) -> str | None:
     """First yes/no token in a reply, or None.
 
     Close-ended models rarely answer with a bare "yes" - they say "Yes, the lesion shows
-    ...". Taking the FIRST verdict matches how ../vlm/quiltvqa_eval_runner.ipynb splits
+    ...". Taking the FIRST verdict matches how ../vlm_judge/quiltvqa_eval_runner.ipynb splits
     Quilt-VQA's close-ended answers, so both pipelines treat these items identically."""
     match = _YES_NO.search(str(text))
     return match.group(1).lower() if match else None

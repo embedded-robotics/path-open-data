@@ -11,9 +11,9 @@ vlm_data_archive/*
 data_evaluation/pathologists/subsets_processing_output/*
 data_evaluation/pathologists/scoring_analysis/input/*
 data_evaluation/pathologists/scoring_analysis/output/*
-data_evaluation/vlm/checkpoints/*
-data_evaluation/vlm/judge_output/*
-data_evaluation/vlm/agreement_output/*
+data_evaluation/vlm_judge/checkpoints/*
+data_evaluation/vlm_judge/judge_output/*
+data_evaluation/vlm_judge/agreement_output/*
 data_evaluation/vlm_zeroshot/checkpoints/*
 data_evaluation/vlm_zeroshot/analysis/*
 data_evaluation/vlm_zeroshot/logs/*
@@ -25,4 +25,4 @@ box_config.json
 *.out
 *.log
 __pycache__/
-data_evaluation/vlm/logs/
+data_evaluation/vlm_judge/logs/

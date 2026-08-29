@@ -22,7 +22,7 @@ two sequential waves.
 
 ## Placement
 
-GPUs 0-2 are occupied by the Qwen judge's Benchmark 5 run in `../vlm/` and MUST NOT be
+GPUs 0-2 are occupied by the Qwen judge's Benchmark 5 run in `../vlm_judge/` and MUST NOT be
 touched - that job has days of accumulated progress and its checkpoint path is absolute.
 Only 3-7 are available.
 
@@ -74,7 +74,7 @@ GPU_CAPACITY_GIB = 47.4
 # than being conservative now.
 RESERVE_GIB = 10.0
 
-# GPUs 0-2 belong to the judge run in ../vlm/. Listed explicitly so `check_fit` can refuse
+# GPUs 0-2 belong to the judge run in ../vlm_judge/. Listed explicitly so `check_fit` can refuse
 # them rather than relying on everyone remembering.
 RESERVED_GPUS = frozenset({0, 1, 2})
 
@@ -135,7 +135,7 @@ def check_fit(model_keys=None) -> list:
     for gpu, keys in sorted(by_gpu.items()):
         if gpu in RESERVED_GPUS:
             problems.append(
-                f"GPU {gpu} is reserved for the judge run in ../vlm/ but was assigned "
+                f"GPU {gpu} is reserved for the judge run in ../vlm_judge/ but was assigned "
                 f"{keys}; that job has days of progress and must not be disturbed")
         total = sum(MODEL_MEMORY_GIB.get(k, 16.0) for k in keys)
         budget = GPU_CAPACITY_GIB - RESERVE_GIB
@@ -164,7 +164,7 @@ def describe_allocation(model_keys=None) -> str:
     for gpu in sorted(set(range(8)) - set(by_gpu) - RESERVED_GPUS):
         lines.append(f"  GPU {gpu}: free")
     for gpu in sorted(RESERVED_GPUS):
-        lines.append(f"  GPU {gpu}: RESERVED (judge run in ../vlm/)")
+        lines.append(f"  GPU {gpu}: RESERVED (judge run in ../vlm_judge/)")
     problems = check_fit(model_keys)
     lines.append("  allocation OK" if not problems else "  PROBLEMS: " + "; ".join(problems))
     return "\n".join(lines)

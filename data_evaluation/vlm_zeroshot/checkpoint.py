@@ -1,6 +1,6 @@
 """Crash-safe, resumable checkpointing for answerer runs.
 
-Same contract as `../vlm/checkpoint.py`, which has already survived several multi-day
+Same contract as `../vlm_judge/checkpoint.py`, which has already survived several multi-day
 interruptions in the judge pipeline: append-only JSONL, one record per model call,
 `fsync` on every write, keyed by a stable `item_id`. Re-running a scoring loop skips
 whatever is already on disk and only spends GPU time on what is missing.
@@ -16,7 +16,7 @@ Two differences the answerer needs:
 2. **Paths are resolved relative to THIS file, not the process CWD.** The judge pipeline
    builds `CHECKPOINT_DIR` from `os.getcwd()`, which bakes an absolute path into the
    running process - renaming the directory mid-run silently orphans the checkpoint
-   (which is exactly why `../vlm/` cannot be renamed while its Benchmark 5 job runs).
+   (which is exactly why `../vlm_judge/` cannot be renamed while its Benchmark 5 job runs).
    Anchoring to `__file__` makes this package movable.
 """
 from __future__ import annotations

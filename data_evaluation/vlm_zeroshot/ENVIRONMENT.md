@@ -8,7 +8,7 @@ tries to "simplify" it later.
 
 torch 2.11.0+cu128, transformers 5.14.1, python 3.14.
 
-Runs everything: the judge pipeline in `../vlm/`, and four of the six answerers -
+Runs everything: the judge pipeline in `../vlm_judge/`, and four of the six answerers -
 Qwen2.5-VL-7B, InternVL3.5-8B, MedGemma-4b, Patho-R1-7B.
 
 ## `path-llava` (LLaVA models only)
