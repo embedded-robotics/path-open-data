@@ -70,3 +70,29 @@ subject of each comparison is visually obvious without the caption saying so.
 - **Null results are labelled `n.s.`**, not left blank.
 - **Chance level is drawn** on every accuracy axis. "42% accuracy" means different things
   at 5 options and at 16.
+
+## Tables
+
+`make_tables.py` generates the manuscript's LaTeX tables into `tables/`, which — like
+`figures/` — is generated output and is gitignored. The script is tracked; its output is
+not, and is reproduced by running it.
+
+```bash
+conda activate path-opendata-vlms
+cd data_graphics
+python make_tables.py            # write every .tex into tables/
+python make_tables.py --print    # also echo to stdout
+```
+
+| file | role | source data |
+|---|---|---|
+| `table1_dataset_quality.tex` | Main text, Pillar 1 | `pathopen_vs_pathvqa_mannwhitney.csv`, `evaluator_score_distributions.csv` |
+| `tableS1_per_evaluator.tex` | Supplementary, Pillar 1 | `evaluator_score_distributions.csv`, `evaluator_homogeneity_tests.csv` |
+| `tableS2_defect_mechanism.tex` | Supplementary, Pillar 1 | `evaluator_score_distributions.csv` |
+
+Preamble: `\usepackage{booktabs}` and `\usepackage{siunitx}`.
+
+Tables are generated rather than hand-typed because a transcribed number goes stale
+silently when the analysis is re-run. Figures show structure; tables carry precision —
+Table 1 collects the exact values behind Figure 1's panels b, c, d and g so a claim can
+be checked without reading four axes.

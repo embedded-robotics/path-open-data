@@ -18,6 +18,7 @@ data_evaluation/vlm_zeroshot/checkpoints/*
 data_evaluation/vlm_zeroshot/analysis/*
 data_evaluation/vlm_zeroshot/logs/*
 data_graphics/figures/*
+data_graphics/tables/*
 data_prep_scripts/output/*
 *.env
 box_config.json
