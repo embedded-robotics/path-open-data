@@ -1,20 +1,38 @@
-# Figures
+# Figures and tables
 
-The ten pillar figures the Results section specifies, in Nature submission format.
+**Five** figures, one per validation pillar, in Nature submission format. (The original
+plan called for ten figures numbered 2-11; they were consolidated into five multi-panel
+figures, which is why the panel counts are high.)
 
 One notebook per pillar, all sharing `nature_style.py` so the set reads as one design
-rather than ten independent plots.
+rather than five independent plots.
 
 ```
 data_graphics/
-  nature_style.py            shared rcParams, palette, save() - import this first
-  pillar1_dataset_quality.ipynb      Figures 2, 3
-  pillar2_wrong_answers.ipynb        Figure 4
-  pillar3_dual_mcq.ipynb             Figures 5, 6
-  pillar4_benchmarking.ipynb         Figures 7, 8, 9
-  pillar5_augmentation.ipynb         Figures 10, 11
-  figures/                   fig02_*.svg + .pdf, ... (flat, not per-pillar)
+  nature_style.py            shared rcParams, palette, mm(), save() - import this first
+  pillar1_dataset_quality.ipynb      Fig 1  171x222 mm   7 panels (a-g)
+  pillar2_wrong_answers.ipynb        Fig 2  182x153 mm   3 panels (a-c)
+  pillar3_dual_mcq.ipynb             Fig 3  172x224 mm   6 panels (a-f)
+  pillar4_benchmarking.ipynb         Fig 4  164x236 mm  11 panels (a-k)
+  pillar5_augmentation.ipynb         Fig 5  177x213 mm   8 panels (a-h)
+  make_tables.py             generates Table 1 + S1-S6 into tables/
+  check_tables.sh            compiles every table; catches overfull boxes
+  figures/                   fig01_*.svg + .pdf, ... (flat, not per-pillar)
+  tables/                    table1_*.tex, tableS1_*.tex, ...
 ```
+
+Both `figures/` and `tables/` are generated output and gitignored; the code is tracked.
+
+**Re-render and re-run the layout audit after ANY edit.** The audit checks rendered
+geometry - panel letters clear of tick labels, legends outside the data area,
+annotations not covering curves, nothing past 183x247 mm.
+
+> The audit's text-vs-data rules compare text against each artist's **bounding box**, not
+> its geometry. A full-height reference line (`axvline`) therefore makes *any* text in
+> that panel flag as "covers plotted data", however empty the region. Those are false
+> positives. To settle one, sample along each polyline and test point-in-box, skipping
+> two-point reference rules. To place an annotation in a dense panel, compute an
+> occupancy grid and find the largest free rectangle rather than guessing.
 
 ## Why this is a top-level folder
 
@@ -89,8 +107,23 @@ python make_tables.py --print    # also echo to stdout
 | `table1_dataset_quality.tex` | Main text, Pillar 1 | `pathopen_vs_pathvqa_mannwhitney.csv`, `evaluator_score_distributions.csv` |
 | `tableS1_per_evaluator.tex` | Supplementary, Pillar 1 | `evaluator_score_distributions.csv`, `evaluator_homogeneity_tests.csv` |
 | `tableS2_defect_mechanism.tex` | Supplementary, Pillar 1 | `evaluator_score_distributions.csv` |
+| `tableS3_judge_calibration.tex` | Supplementary, Pillar 2 | judge tier-agreement CSVs |
+| `tableS4_dataset_comparison.tex` | Supplementary, Pillar 4 | `dataset_comparison_*.csv` |
+| `tableS5_format_rank_correlations.tex` | Supplementary, Pillar 4 | `format_rank_correlations.csv` |
+| `tableS6_benchmark4_rating.tex` | Supplementary, Pillar 5 | `evaluator_score_distributions.csv`, `judge_pathologist_weighted_kappa.csv` |
 
-Preamble: `\usepackage{booktabs}` and `\usepackage{siunitx}`.
+Preamble: `\usepackage{booktabs}`, `\usepackage{siunitx}` and **`\usepackage{graphicx}`**
+(Table 1 is wrapped in `\resizebox`).
+
+Verify with `./check_tables.sh`, which needs `tectonic` on PATH - there is no system
+LaTeX and a full TeX Live will not fit (`/data` is at 100%). Structural checks cannot
+see page overflow: Table 1 once ran 243 pt off the page with two columns invisible while
+passing every column-count and environment check.
+
+The test build numbers tables 1-7 sequentially because it is a plain `article`. In the
+manuscript, S1-S6 must sit inside whatever supplementary environment resets the counter
+and prefixes "S". Two cross-references inside captions assume that numbering (Table S6
+says "as in Table S1"); they are hard-coded strings, not `\ref`s.
 
 Tables are generated rather than hand-typed because a transcribed number goes stale
 silently when the analysis is re-run. Figures show structure; tables carry precision —
