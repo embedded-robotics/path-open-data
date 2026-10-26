@@ -64,6 +64,7 @@ def table1_dataset_quality() -> str:
         r"more consistent.}",
         r"\label{tab:dataset-quality}",
         r"\sisetup{table-format=-1.3}",
+        r"\resizebox{\linewidth}{!}{%",
         r"\begin{tabular}{l"
         r" S[table-format=1.2] S[table-format=1.2]"
         r" S[table-format=2.1] S[table-format=2.1]"
@@ -93,7 +94,7 @@ def table1_dataset_quality() -> str:
             }
         row = human.loc[effect_key]
         significant = row.rb_ci_high < 0
-        effect = (f"{row.rank_biserial:.3f} "
+        effect = (f"{row.rank_biserial:.2f} "
                   f"[{row.rb_ci_low:.2f}, {row.rb_ci_high:.2f}]")
         lines.append(
             f"{label} & {row.mean_pathopen:.2f} & {row.mean_pathvqa:.2f} & "
@@ -102,7 +103,7 @@ def table1_dataset_quality() -> str:
             f"{cells['po']['spread']:.2f} & {cells['pv']['spread']:.2f} & "
             f"{effect} \\\\")
 
-    lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}", ""]
+    lines += [r"\bottomrule", r"\end{tabular}}", r"\end{table}", ""]
     return "\n".join(lines)
 
 
