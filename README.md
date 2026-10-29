@@ -11,7 +11,10 @@ variant and a class-balanced retention variant.
 
 The accompanying manuscript is being prepared for *Scientific Data* as a Data
 Descriptor. **The manuscript source is not in this repository** - it lives with the
-corresponding author. §7 lists the issues in the current draft that still need fixing.
+corresponding author, restructured into the journal's mandated section order
+(Background & Summary -> Methods -> Data Records -> Technical Validation -> Usage Notes,
+with no Results or Discussion section). §7 records what changed between the original draft
+and that version, since several of the fixes were to claims this code generates.
 
 ---
 
@@ -45,7 +48,7 @@ detail for their stage. This file is the map; they are the territory:
 | `data_evaluation/vlm_judge/README.md` | Judge pipeline, the five rubrics, checkpoint invariant |
 | `data_evaluation/vlm_zeroshot/README.md` | Answerer pipeline, the six-model set, metrics |
 | `data_evaluation/vlm_zeroshot/ENVIRONMENT.md` | **Why two conda environments are required** |
-| `data_graphics/README.md` | Figure conventions, Nature sizing, table generation |
+| `data_graphics/README.md` | Figure conventions, Nature sizing, table generation, **the two sn-jnl float traps** |
 
 ---
 
@@ -161,9 +164,16 @@ Outputs → `augmentation_balance_output/`: `pillar5b_balance_before_after.csv`,
 PNGs in `output/`: word-count distributions and thresholds, organ / categorization /
 regional-anatomy / magnification breakdowns.
 
-These describe the *dataset*. The `data_graphics/` figures report the *evaluation*. Don't
-confuse the two sets — they serve different manuscript sections (Data Records vs.
-Technical Validation).
+> ⚠️ **These are no longer the manuscript's figures.** The three `dataset_*.ipynb`
+> notebooks in `data_graphics/` supersede them: same material, consolidated into three
+> publication figures, recomputed against the **229 as-released images** rather than the
+> 231 image slots, plus analyses these PNGs never had (Lorenz/Gini concentration,
+> magnification co-occurrence, organ x category coverage, question-opening words).
+>
+> This stage is kept as the exploratory record — the funnel numbers are easier to
+> re-derive here, and the word-count threshold logic (`>=` not `>`, which moves every
+> figure 2-5 points) originates here. **To change a dataset-statistics number in the
+> paper, edit `data_graphics/dataset_*.ipynb`.**
 
 ### 3.4 `data_evaluation/` — the evidence
 
@@ -234,21 +244,33 @@ Outputs → `analysis/` (20 CSVs). Run a smoke test first; a full launch is many
 
 ### 3.5 `data_graphics/` — manuscript figures and tables
 
-Five notebooks, one per validation pillar, all importing `nature_style.py`.
+Eight notebooks: three describing the dataset, five reporting the validation pillars, all
+importing `nature_style.py`.
 
 ```
 nature_style.py      shared rcParams, palette, mm(), save(), panel_label_below()
-pillar1_dataset_quality.ipynb    Fig 1  171x222 mm  7 panels
-pillar2_wrong_answers.ipynb      Fig 2  182x153 mm  3 panels
-pillar3_dual_mcq.ipynb           Fig 3  172x224 mm  6 panels
-pillar4_benchmarking.ipynb       Fig 4  164x236 mm  11 panels
-pillar5_augmentation.ipynb       Fig 5  177x213 mm  8 panels
-make_tables.py       generates Table 1 + S1-S6 into tables/
+
+dataset_composition.ipynb          Fig 2  183x231 mm   8 panels   <- metadata composition
+dataset_text_characteristics.ipynb Fig 3  183x211 mm   7 panels   <- question/answer text
+dataset_pathvqa_funnel.ipynb       Fig 4  155x 72 mm   1 panel    <- PathVQA filtering
+
+pillar1_dataset_quality.ipynb      Fig 5  171x222 mm   7 panels
+pillar2_wrong_answers.ipynb        Fig 6  182x153 mm   3 panels
+pillar3_dual_mcq.ipynb             Fig 7  172x224 mm   6 panels
+pillar4_benchmarking.ipynb         Fig 8  165x236 mm  11 panels
+pillar5_augmentation.ipynb         Fig 9  177x213 mm   8 panels
+
+make_tables.py       generates 8 main-text tables + 1 supplementary into tables/
 check_tables.sh      compiles every table to catch overfull boxes
 ```
 
+Fig. 1 is the workflow diagram at the repo root. **The three `dataset_*` notebooks are new
+and supersede `data_analysis/output/`** — see §3.3.
+
 Hard constraint: **183 × 247 mm**, 5 pt minimum type. See `data_graphics/README.md` for
-the colour system and plotting conventions.
+the colour system, the plotting conventions, and the **two sn-jnl float traps** that affect
+every wide table (one of them silent — it drops the table, caption and label while
+compiling clean).
 
 ```bash
 conda activate path-opendata-vlms
@@ -271,15 +293,21 @@ python make_tables.py
 
 ## 4. The five validation pillars
 
-Everything in `data_graphics/` and most of `data_evaluation/` exists to serve these.
+Most of `data_evaluation/`, and the five `pillar*` notebooks in `data_graphics/`, exist to
+serve these. (The three `dataset_*` notebooks serve Data Records instead — they describe
+what the dataset *is*, not how well it rates.)
 
-| Pillar | Question | Artifacts |
+| Pillar | Question | Artifacts (manuscript numbering) |
 |---|---|---|
-| **1 — Dataset quality** | Is PathOPEN better rated than filtered PathVQA? | Fig 1, Tables 1 / S1 / S2 |
-| **2 — Wrong-answer structure** | Do wrong answers form graded difficulty tiers? | Fig 2, Table S3 |
-| **3 — MCQ option validity** | Do MCQ options work as standalone statements? | Fig 3 |
-| **4 — Benchmarking utility** | How does PathOPEN compare as a benchmark? | Fig 4, Tables S4 / S5 |
-| **5 — Augmentation strategy** | Does augmentation preserve content and fix imbalance? | Fig 5, Table S6 |
+| **1 — Dataset quality** | Is PathOPEN better rated than filtered PathVQA? | Fig 5, Tables 2 / 3 / 4 |
+| **2 — Wrong-answer structure** | Do wrong answers form graded difficulty tiers? | Fig 6, Table 5 |
+| **3 — MCQ option validity** | Do MCQ options work as standalone statements? | Fig 7 |
+| **4 — Benchmarking utility** | How does PathOPEN compare as a benchmark? | Fig 8, Tables 6 / 7 |
+| **5 — Augmentation strategy** | Does augmentation preserve content and fix imbalance? | Fig 9, Table 8 |
+
+The dataset itself is described by Figs. 2-4 and Table 1, which are *not* pillar outputs —
+they belong to Data Records. Supplementary Tables S1-S6 are the six benchmark rubrics
+(hand-written, in the manuscript package); S7 is the generated axis-label key.
 
 All ratings use the ordinal scale **{−1, 0, 1, 2}**, where **−1 always means "unable to
 evaluate"** — not a low score. Analyses must handle it explicitly rather than treating
@@ -294,9 +322,11 @@ These are established and were expensive to get right:
   (not all nine — InternVL's B3 CI crosses). Report Gwet's AC1 alongside κ: at 95%
   exact agreement κ collapses to −0.022 while AC1 is 0.984.
 - **Pillar 2** — Judges **cannot** reproduce pathologist difficulty tiers: 24 κ cells,
-  all below 0.26. Table S3 diagnoses why (near-miss inflation 2.4–3.0×, and 2.7×/1.5×
-  worse on free-text than option-shaped distractors). This is a reportable negative
-  result, not a failure to hide.
+  all below 0.26 (max 0.2533, one negative; means 0.114 InternVL / 0.142 Qwen). Table 5
+  diagnoses why (near-miss inflation 2.4–3.0×, and 2.65×/1.54× worse on free-text than
+  option-shaped distractors). This is a reportable negative result, not a failure to hide.
+  Note the tiers are *similar* in near-miss rate across authoring routes (17.2% vs 14.0%);
+  the routes differ in the far-miss tail (39.1% vs 60.6%).
 - **Pillar 3** — Benchmark 5a survives both judges; **5b inverts between them** —
   InternVL ranks PathOPEN first on distractor criteria, Qwen ranks it last. Report both
   judges for every 5b claim. **Do not claim position-bias superiority**: PathOPEN
@@ -335,7 +365,7 @@ python data_evaluation/vlm_zeroshot/launch_all.py
 
 # 5. Figures and tables
 cd data_graphics && python make_tables.py && ./check_tables.sh
-#    then run the five pillar notebooks
+#    then run the three dataset_* notebooks and the five pillar notebooks
 ```
 
 Stages 1–3 are CPU and take minutes to hours. Stage 4 is the expensive one.
@@ -345,8 +375,9 @@ Stages 1–3 are CPU and take minutes to hours. Stage 4 is the expensive one.
 ## 6. Data availability — open issue
 
 `pathopen_data/` is **gitignored**, so a clone contains no images or JSON. The dataset
-has not yet been deposited publicly: the manuscript's Table 3 marks PathOPEN not-public,
-the Data Availability section is empty, and the code repository is public.
+has not yet been deposited publicly: the manuscript's Data Availability section still
+carries `\TODO` placeholders for repository, DOI and licence, while this code repository
+is public.
 
 *Scientific Data* **requires deposition in a public repository before submission.** This
 is a blocker for the manuscript, not a formatting detail. Whoever takes this over needs
@@ -365,26 +396,85 @@ pathopen_data/
 
 ---
 
-## 7. Known issues in the current manuscript draft
+## 7. Manuscript corrections traceable to this code
 
-Verified against the code; listed so they are not rediscovered:
+All of the issues previously listed here have been resolved in the restructured
+manuscript. They are kept, with their resolutions, because **each one was settled by
+reading the code or the generated CSVs** — so if a number here changes, the manuscript
+claim changes with it.
 
-| Where | Issue |
+| Issue in the original draft | Resolution |
 |---|---|
-| §2.1–2.5 | These are the original *plan*, not results. Every figure they describe does not exist. They must be rewritten against the real figures/tables. |
-| §2.4 | Claims PathOPEN is "harder, more discriminating" — both withdrawn; CIs do not support either. Table 2's Pillar 4 row likewise. |
-| §2.1 | Promises Fleiss' κ / Krippendorff's α — not computable on this design. |
-| §2.8 | Nuclei threshold "more than 5"; code and §3.5.2 say 10. |
-| Fig. 6 | Shows 1,504 filtered images; the correct figure is 1,241. QA counts are right. |
-| §3.5.2 / §3.5.3 | Section headings are swapped relative to their content. |
-| §2.9.3 / p.27 | Close-ended count given as both 3,005 and 3,009. |
-| §3.5.4 | References "§4.5.6", which does not exist. |
-| §3.2 | Mandates 4–6-word MCQ options, but Benchmark 5a scores a "short phrase" as 0. |
-| Structure | Target is *Scientific Data*, which has **no Results section** — content must be remapped to Background & Summary / Methods / Data Records / Technical Validation / Usage Notes. |
+| "Harder / more discriminating benchmark" | **Withdrawn.** PathOPEN is mid-range on chance-corrected accuracy (22.36 [19.88, 24.98] vs PathMMU 25.75) with the narrowest model spread of three. |
+| Promised Fleiss' κ / Krippendorff's α | **Not computable** — one rater per item, zero overlap. Replaced by distributional homogeneity (χ², Kruskal-Wallis). |
+| Nuclei threshold "more than 5" | **10.** `nuclei_centers.shape[0] > 10`; the stale comment mentioning 5 is a kNN parameter. |
+| Filtered PathVQA shown as 1,504 images | **1,241**, counted from the pickles. QA counts were right. |
+| Close-ended count 3,005 vs 3,009 | **3,005.** |
+| Dangling reference to a Benchmark 5 validation section | **No such validation exists.** Pathologist ratings cover Benchmarks 1-4 only; B5 is judge-vs-judge, so its agreement is a reliability signal, not validation. |
+| 4-6-word MCQ option mandate vs Benchmark 5a scoring a fragment as 0 | Disclosed as measured: options average **8.58 words** over distinct strings (median 9, only 10.6% in the 4-6 band), or **9.67** over the 1,145 options B5 actually rated. Framed as the pathologists reading the mandate as a floor. |
+| **Image count** | The release has **229 images, not 231** — cases 9 and 79 were never retrieved. Every image-dependent count changed; `table_data_records.tex` prints both columns. |
+| PathVQA pair count 32,799 | **32,795** is what the released pickles contain; both are disclosed. |
+| Regional-anatomy classes "112 → 111" on case folding | **113 → 111**, on two collisions (`Mucosa`/`mucosa`, `Tongue`/`tongue`). |
+| PathMMU MCQ option length 4.1 words | **4.81** (PatchVQA 4.98), measured from the B5 checkpoints. The "roughly twice as long" comparison survives. |
+| "Near-miss tier more than twice as frequent in the open-ended-native pool" | **False** — 17.2% vs 14.0%, a ratio of 1.23, on either B2 criterion. The real asymmetry is the far-miss tail (39.1% vs 60.6%). |
+| Structure | Remapped to *Scientific Data*'s mandated order; no Results or Discussion section. |
+
+### Counting units that have two correct answers
+
+Four quantities differ depending on the unit, and all four appear in the manuscript. **None
+is an error; do not "fix" one to match the other.**
+
+| Quantity | Per distinct item | Per rated unit |
+|---|---|---|
+| MCQ option words | 8.58 (775 distinct strings) | 9.67 (1,145 rated options) |
+| Open-ended question words | 17.6 (309 questions) | 18.67 (457 question-image pairs) |
+| Metadata Gini | per case: 0.44 / 0.66 / 0.24 / 0.37 | per image: 0.45 / 0.71 / 0.32 / 0.37 |
+| Benchmark 2 tier counts | 349 OE-native + 920 MCQ-derived wrong answers | 686 + 1,831 **ratings** (both B2 criteria scored per answer) |
+
+The B2 one is the easiest to misread: `wrong_answer_tier_agreement.csv` reports 668 and
+1,773, which are those ratings *further restricted* to items where the judge also returned
+a tier. Percentages agree within 0.7 pp either way.
 
 ---
 
-## 8. Repo conventions
+## 8. What changed during the manuscript restructure
+
+For anyone returning to this repo after the move to *Scientific Data* format. Dates are
+approximate; the git log is authoritative.
+
+**Three Data Records notebooks** — `dataset_composition.ipynb`,
+`dataset_text_characteristics.ipynb` and `dataset_pathvqa_funnel.ipynb` — produce the
+manuscript's Figs. 2-4. They **replace `data_analysis/output/`'s 29 exploratory PNGs** as
+the published dataset statistics, and carry four analyses the PNGs never had: a
+**Lorenz/Gini concentration** panel over all four metadata fields, a **magnification
+co-occurrence matrix**, an **organ x category coverage grid**, and a
+**question-opening-word** breakdown. The pillar figures' panel content is unchanged; only
+their captions and the text around them were revised.
+
+**`make_tables.py` grew from 8 outputs to 9.** Added `table_data_records` (item counts,
+as-collected vs as-released). The `S` prefix was **dropped from every filename** — the
+manuscript's S1-S6 are now the six benchmark rubrics, which live in the manuscript package,
+not here, so the generated tables are main-sequence (the one exception,
+`table_label_abbreviations`, became S7). Five of the tables use the
+savebox + `tableorg` pattern that the manuscript class requires; see
+`data_graphics/README.md` for both traps, one of which fails silently.
+
+**`check_tables.sh`** now stubs `\pathopentablebox`, `tableorg` and `\TODO` so the
+converted tables still compile standalone. It cannot reproduce the silent dropped-float
+trap — that needs the real class.
+
+**One data fix.** The `Gastrointestinal - Small Intenstine` typo was corrected in the
+collected data.
+
+**Numbers that changed as a result**, all re-derived from the CSVs and now matching the
+manuscript: the release has **229 images** (not 231), regional anatomy has **113** released
+classes, PathMMU's option length is **4.81** words, and the Benchmark 2 near-miss ratio
+between authoring routes is **1.23×**, not the ">2×" previously claimed. §7 has the full
+list with resolutions.
+
+---
+
+## 9. Repo conventions
 
 - **Branch**: work happens on `vlm_process`; `main` is the integration branch.
 - **Notebooks are the interface** for exploratory stages; `.py` modules for anything
@@ -399,7 +489,7 @@ Verified against the code; listed so they are not rediscovered:
 
 | File | Status |
 |---|---|
-| `main_workflow.png`, `PathOPEN_workflow.svg` | Workflow diagram (manuscript Fig. 18) |
+| `main_workflow.png`, `PathOPEN_workflow.svg` | Workflow diagram (manuscript **Fig. 1**) |
 | `datasets_models_download.ipynb` | Fetches comparator datasets and model checkpoints |
 | `intern_vl_testing.ipynb`, `qwen_vl_testing.ipynb` | Early scratch notebooks, superseded by `smoke_tests/` |
 | `vlm_codes_archive/`, `vlm_data_archive/` | Archived earlier work, not part of the pipeline |
