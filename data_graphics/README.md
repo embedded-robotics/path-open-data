@@ -97,6 +97,20 @@ easier to re-derive there. If a dataset-statistics number needs changing, change
 | format | SVG (submission) + PDF (LaTeX), vector, text kept as text |
 | panel labels | bold lowercase **a**, **b**, **c** |
 
+> **Caption font is set in the manuscript, not here.** `sn-jnl` specifies 8/9.5 pt for
+> both figure and table captions, but the `caption` package bypasses that, so the
+> manuscript preamble restores it explicitly with `\captionsetup[figure]{font=footnotesize}`.
+> Captions rendered at the 10 pt body size until 2026-10-29, which is why figure pages were
+> giving a third to a half of their height to text. Legends are capped at **350 words** by
+> *Scientific Data*; keep values in the body prose and use the caption for what each panel
+> shows plus the conventions needed to read it.
+>
+> **The same applies to the table captions in `make_tables.py`** (trimmed 42% on
+> 2026-10-29). A table caption names the table, defines its columns and blocks, states the
+> conventions needed to read it, and points at the section that interprets it —
+> interpretation itself belongs in the text. Note the caption strings are Python *raw*
+> strings, so an apostrophe must be typed as `'`; `\x27` stays literal and prints verbatim.
+
 `svg.fonttype: none` keeps text as text rather than converting to paths, so labels stay
 editable and searchable in the typeset PDF. `pdf.fonttype: 42` embeds TrueType - journals
 reject Type 3.

@@ -114,16 +114,13 @@ def table1_dataset_quality() -> str:
         r"\centering",
         r"\caption{\textbf{PathOPEN item quality against filtered PathVQA.} "
         r"Scores are on the ordinal scale $\{-1,0,1,2\}$, where $-1$ marks an item a "
-        r"pathologist could not evaluate. Mean and effect size pool the five "
-        r"pathologists; \% max, \% unscorable and rater spread are computed per "
-        r"pathologist and then averaged, so the mean and \% max columns need not move "
-        r"together. These per-rater averages run over all five pathologists' pools, "
-        r"whereas Fig.~\ref{fig:pillar1}b reports unscorable rates over the 231-item "
-        r"subset the VLM judges also rated; the two therefore differ. "
-        r"Effect size is the rank-biserial correlation with a bootstrapped "
-        r"95\% CI (2{,}000 resamples); negative values indicate PathOPEN ranks higher. "
-        r"Rater spread is the range of the five pathologists' mean scores -- smaller is "
-        r"more consistent.}",
+        r"pathologist could not evaluate and is reported separately, never averaged in. "
+        r"Mean and effect size pool the five pathologists; \% max, \% unscorable and "
+        r"rater spread are per pathologist and then averaged, so mean and \% max need "
+        r"not move together. Effect size is the rank-biserial correlation with a "
+        r"bootstrapped 95\% CI, negative meaning PathOPEN ranks higher; rater spread is "
+        r"the range of the five pathologists' means, smaller being more consistent. "
+        r"Denominators and tests are in Section~\ref{sec:pillar1}.}",
         r"\label{tab:dataset-quality}",
         r"\sisetup{table-format=-1.3}",
         r"\resizebox{\linewidth}{!}{\usebox{\pathopentablebox}}",
@@ -228,17 +225,13 @@ def table_data_records() -> str:
         r"",
         r"\begin{tableorg}[t]",
         r"\centering",
-        r"\caption{\textbf{PathOPEN item counts.} Each question applies to every image of "
-        r"its case, so question--image pair counts exceed question counts: there are 309 "
-        r"open-ended questions across the 157 cases, of which "
-        + str(collected["oe_with_wrong"]) +
-        r" carry a wrong answer in addition to the correct one. The two columns differ "
-        r"because the single images of cases 9 and 79 could not be retrieved from the "
-        r"collection store, so neither the original nor any augmentation exists for them; "
-        r"both cases retain their full text and metadata. \textbf{Published work should "
-        r"quote the as-released figures.} Augmented counts scale the released counts by "
-        r"the 30 augmentations carried by each available image, which inherit the text, "
-        r"metadata and magnification of their source.}",
+        r"\caption{\textbf{PathOPEN item counts.} A question applies to every image of "
+        r"its case, so question--image pair counts exceed question counts. The two "
+        r"\emph{Original images} columns differ because the single images of cases 9 and "
+        r"79 could not be retrieved; both cases keep their full text and metadata. "
+        r"\textbf{Published work should quote the as-released figures.} Augmented counts "
+        r"scale the released counts by the 30 augmentations each available image carries. "
+        r"Section~\ref{sec:data-records} gives the breakdown.}",
         r"\label{tab:data-records}",
         r"\resizebox{\linewidth}{!}{\usebox{\pathopentablebox}}",
         r"\end{tableorg}",
@@ -261,14 +254,11 @@ def table_s1_per_evaluator() -> str:
         r"\begin{tableorg}[t]",
         r"\centering\small",
         r"\caption{\textbf{Per-pathologist score distributions.} Each item was rated by "
-        r"exactly one pathologist, so no per-item agreement statistic (Fleiss' $\kappa$, "
-        r"Krippendorff's $\alpha$) is computable; what can be tested is whether the five "
-        r"raters' score \emph{distributions} differ across the pools each of them saw. "
-        r"$P$ is from a Kruskal--Wallis test across the five raters. PathOPEN's raters "
-        r"differ far less than filtered PathVQA's, and on Benchmark 3 they are "
-        r"statistically indistinguishable. Note that PathOPEN's narrow spread is partly "
-        r"a ceiling effect: when 84--100\% of each rater's scores are the maximum there "
-        r"is little room to disagree.}",
+        r"exactly one pathologist, so these are distributions over disjoint item pools, "
+        r"not repeated ratings of the same items; no per-item inter-rater coefficient is "
+        r"computable from this design. \% max is the share of a rater's scores at the "
+        r"maximum of 2, and the Kruskal--Wallis test asks whether the five "
+        r"distributions differ. Interpretation is in Section~\ref{sec:pillar1}.}",
         r"\label{tab:per-evaluator}",
         r"\resizebox{\linewidth}{!}{\usebox{\pathopentablebox}}",
         r"\end{tableorg}",
@@ -332,15 +322,10 @@ def table_s2_defect_mechanism() -> str:
         r"\begin{tableorg}[t]",
         r"\centering\small",
         r"\caption{\textbf{Per-pathologist rate of unscorable items.} Percentage of items "
-        r"each pathologist scored $-1$ (``unable to comprehend the question and/or image, "
-        r"or unable to make the evaluation''). On PathOPEN four of the five raters marked "
-        r"\emph{no} item unscorable on any criterion, and the widest disagreement between "
-        r"raters is 3.6 percentage points. On filtered PathVQA the same five raters "
-        r"disagree by up to 70 points about whether items can be evaluated at all -- on "
-        r"Benchmark 3 one pathologist found every item scorable while another rejected "
-        r"70\% of theirs. Disagreement about answerability is a more fundamental defect "
-        r"than disagreement about quality, because it means the item does not present a "
-        r"well-posed question.}",
+        r"each pathologist scored $-1$, i.e.\ could not evaluate, by criterion. A dash "
+        r"marks a criterion that rater did not see. Because an unscorable item is one "
+        r"that does not pose a well-posed question about its image, these rates measure "
+        r"dataset construction rather than difficulty; see Section~\ref{sec:pillar1}.}",
         r"\label{tab:defect-mechanism}",
         r"\resizebox{\linewidth}{!}{\usebox{\pathopentablebox}}",
         r"\end{tableorg}",
@@ -440,19 +425,13 @@ def table_s3_judge_calibration() -> str:
         r"\begin{table}[t]",
         r"\centering\small",
         r"\caption{\textbf{Why VLM judges do not reproduce the pathologists' difficulty "
-        r"tiers.} Both judges assign the tiers with a systematically more generous "
-        r"threshold rather than at random: each inflates the near-miss category "
-        r"$2.4$--$3.0\times$ relative to the pathologists, and InternVL assigns far-miss to "
-        r"only $14.2\%$ of items against the pathologists' $50.5\%$. Per-tier recall shows "
-        r"the consequence -- InternVL calls an item near-miss $52.7\%$ of the time when the "
-        r"pathologist did, but also $51.1\%$ of the time when the pathologist said "
-        r"moderate-miss, so its assignment is close to independent of theirs. Agreement is "
-        r"markedly worse on OE-native distractors, which are free text, than on MCQ-derived "
-        r"ones, which are written as formatted options -- $2.7\times$ for InternVL and "
-        r"$1.5\times$ for Qwen -- so the automation gap is widest exactly where the "
-        r"distractor is not already option-shaped. This is a calibration failure, not "
-        r"noise, and it is what makes Benchmark~2 unsuitable for automation in its "
-        r"present form.}",
+        r"tiers.} \emph{Upper block:} the share of items each rater assigned to each "
+        r"tier, with the judge's near-miss inflation relative to the pathologists. "
+        r"\emph{Middle block:} per-tier recall, i.e.\ what the judge said given what the "
+        r"pathologist said. \emph{Lower block:} quadratic-weighted $\kappa$ split by "
+        r"authoring route, OE-native being free text and MCQ-derived already "
+        r"option-shaped. Section~\ref{sec:pillar2} reads the pattern as a calibration "
+        r"failure rather than noise.}",
         r"\label{tab:judge-calibration}",
         r"\begin{tabular}{l l S[table-format=2.1] S[table-format=2.1] S[table-format=2.1]"
         r" S[table-format=1.2]}",
@@ -560,20 +539,15 @@ def table_s4_dataset_comparison() -> str:
         r"PLACEHOLDER_OPEN",
         r"\begin{tableorg}[t]",
         r"\centering\small",
-        r"\caption{\textbf{Cross-dataset performance with bootstrapped confidence intervals "
-        r"and pairwise tests.} Means pool the six zero-shot models, treating each "
-        r"(model,~item) pair as one observation; intervals are percentile bootstrap "
-        r"(2{,}000 resamples over items). For MCQ the comparable quantity is accuracy above "
-        r"chance, because option counts range from 2 to 16 across datasets. Pairwise "
-        r"comparisons are two-sided Mann--Whitney $U$ with Holm correction within each "
-        r"format; the effect size is the rank-biserial correlation. "
-        r"\textbf{Every pairwise difference is significant after correction}, so the "
-        r"chance-corrected ordering PathMMU $>$ PathOPEN $>$ PatchVQA is not an artifact of "
-        r"point estimates: PathOPEN's interval $[19.88, 24.98]$ sits below PathMMU's "
-        r"$[24.42, 27.04]$. On open-ended generation PathOPEN scores far above filtered "
-        r"PathVQA (rank-biserial $0.740$), whose 7.8-word references leave the metric with "
-        r"little to measure. Item clustering is not modelled, which makes these intervals "
-        r"mildly anti-conservative.}",
+        r"\caption{\textbf{Cross-dataset performance with bootstrapped confidence "
+        r"intervals and pairwise tests.} Means pool the six zero-shot models, treating "
+        r"each (model, item) pair as one observation; intervals are percentile bootstrap "
+        r"over items (2{,}000 resamples). For MCQ the comparable quantity is accuracy "
+        r"\emph{above chance}, since option counts differ by dataset. Rank-biserial is "
+        r"signed so positive favours the first dataset named, and $P$ values are "
+        r"Holm-corrected within format. Treating (model, item) pairs as independent does "
+        r"not model item clustering, so the intervals are mildly anti-conservative. "
+        r"Section~\ref{sec:pillar4} interprets them.}",
         r"\label{tab:dataset-comparison}",
         r"\resizebox{\linewidth}{!}{\usebox{\pathopentablebox}}",
         r"\end{tableorg}",
@@ -627,15 +601,11 @@ def table_s5_format_rank_correlations() -> str:
         r"\begin{table}[t]",
         r"\centering\small",
         r"\caption{\textbf{Model rank is not stably preserved across answer formats.} "
-        r"Spearman rank correlation between the six models' mean performance in each pair "
-        r"of formats, computed on PathOPEN. \textbf{No pairing is significant}, which with "
-        r"$n = 6$ models is the most that can be concluded: MCQ rank carries no detectable "
-        r"information about open-ended rank. The point estimate is also sensitive to basis "
-        r"-- ranking models by their mean across all three datasets rather than on PathOPEN "
-        r"alone gives $\rho = 0.200$ for MCQ versus open-ended instead of $0.543$ -- so the "
-        r"claim should be stated as the absence of a stable relationship rather than as a "
-        r"particular correlation value. This is the evidence that single-format evaluation "
-        r"cannot support a general claim about pathology competence.}",
+        r"Spearman rank correlation between the six models' mean performance in each "
+        r"pair of formats, on PathOPEN. $\rho$ is also reported on the mean across all "
+        r"three datasets, because the estimate is basis-dependent. With $n = 6$ models "
+        r"no pairing can reach significance, so Section~\ref{sec:pillar4} reports the "
+        r"\emph{absence} of a stable relationship rather than any particular value.}",
         r"\label{tab:format-ranks}",
         r"\begin{tabular}{l S[table-format=1.0] S[table-format=-1.3] c c}",
         r"\toprule",
@@ -673,20 +643,12 @@ def table_s6_benchmark4_rating() -> str:
         r"\begin{table}[t]",
         r"\centering\small",
         r"\caption{\textbf{Reliability of the Benchmark~4 ratings of augmented images.} "
-        r"\emph{Upper block:} each pathologist's mean score and the percentage of images "
-        r"they could not evaluate. The five raters differ significantly on both criteria "
-        r"(Kruskal--Wallis $P < 0.001$; spread $0.52$ and $0.50$), wider than on PathOPEN's "
-        r"original items (Table~S1, spread $0.20$--$0.24$). The divergence is concentrated "
-        r"in one rater: evaluator~5 marked $12.2\%$ and $9.5\%$ of augmented images "
-        r"unscorable where the other four marked none, so the headline figures ($88.3\%$ "
-        r"and $84.2\%$ maximum-score) are means pulled down by a single rater who found "
-        r"augmented images hard to \emph{assess} rather than poor in content. "
-        r"\emph{Lower block:} judge-versus-pathologist agreement. As in Table~S1 the "
-        r"prevalence of maximum scores collapses $\kappa$ while exact agreement stays near "
-        r"$80\%$: seven of the eight $\kappa$ confidence intervals include zero, so $\kappa$ "
-        r"carries essentially no information at this prevalence. Gwet's AC1, stable "
-        r"under high prevalence, gives $0.91$--$0.95$. Item-level agreement is therefore "
-        r"moderate even though the score \emph{distributions} match closely.}",
+        r"\emph{Upper block:} each pathologist's mean score and the percentage of "
+        r"images they could not evaluate, with a Kruskal--Wallis test of whether the five "
+        r"differ. \emph{Lower block:} judge-versus-pathologist agreement, reporting exact "
+        r"agreement, quadratic-weighted $\kappa$ and Gwet's AC1 with confidence "
+        r"intervals. AC1 is given because $\kappa$ is unstable when one score dominates. "
+        r"Section~\ref{sec:pillar5} identifies the single rater driving the spread.}",
         r"\label{tab:benchmark4-rating}",
         r"\begin{tabular}{l l r l r}",
         r"\toprule",
@@ -782,8 +744,7 @@ def table_s7_label_abbreviations() -> str:
         r"\centering\small",
         r"\caption{\textbf{Axis-label abbreviations used in the dataset figures.} "
         r"Metadata values are stored and released in full; these short forms appear only "
-        r"on figure axes, where the longest values would otherwise leave no room for the "
-        r"data. The organ-system prefixes follow common pathology usage.}",
+        r"on figure axes, where the longest values would leave no room for the data.}",
         r"\label{tab:label-abbreviations}",
         r"\begin{tabular}{l l}",
         r"\toprule",

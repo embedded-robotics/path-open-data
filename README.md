@@ -463,8 +463,14 @@ savebox + `tableorg` pattern that the manuscript class requires; see
 converted tables still compile standalone. It cannot reproduce the silent dropped-float
 trap — that needs the real class.
 
-**One data fix.** The `Gastrointestinal - Small Intenstine` typo was corrected in the
-collected data.
+**Two data fixes.** The `Gastrointestinal - Small Intenstine` typo was corrected in the
+collected data. And `dataset_pathvqa_funnel.ipynb` had the raw PathVQA pair count
+hard-coded as **32,799** (the publication's figure) where the released pickles contain
+**32,795** — corrected, since the manuscript text already quoted the released count.
+
+> ⚠️ **`nbconvert` is not installed** in `path-opendata-vlms`, so
+> `jupyter nbconvert --execute` will fail. To re-render a figure non-interactively, extract
+> the notebook's code cells and run them with `MPLBACKEND=Agg python`.
 
 **Numbers that changed as a result**, all re-derived from the CSVs and now matching the
 manuscript: the release has **229 images** (not 231), regional anatomy has **113** released
